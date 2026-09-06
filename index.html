@@ -1160,9 +1160,7 @@
 </head>
 <body>
 
-  <audio id="bgm" preload="auto" loop>
-    <source src="./tusaukeser.mp3" type="audio/mpeg">
-  </audio>
+  <audio id="bgm" preload="auto" loop playsinline></audio>
 
   <div class="language-gate" id="languageGate" aria-modal="true" role="dialog">
     <div class="language-card">
@@ -1452,6 +1450,35 @@
       document.querySelectorAll('[data-switch-lang]').forEach(btn=>btn.classList.toggle('active',btn.dataset.switchLang===lang));
     }
 
+    const AUDIO_CANDIDATES = [
+      'https://mukhtar3105.github.io/Dinmukhamed_Tusaukeser/tusaukeser.mp3?v=20',
+      './tusaukeser.mp3?v=20'
+    ];
+
+    function waitForAudioReady(audio, timeoutMs = 12000){
+      return new Promise((resolve, reject) => {
+        let done = false;
+        const finish = (ok, value) => {
+          if(done) return;
+          done = true;
+          cleanup();
+          ok ? resolve(value) : reject(value);
+        };
+        const onReady = () => finish(true);
+        const onError = () => finish(false, audio.error || new Error('Audio load error'));
+        const timer = setTimeout(() => finish(false, new Error('Audio timeout')), timeoutMs);
+        const cleanup = () => {
+          clearTimeout(timer);
+          audio.removeEventListener('canplay', onReady);
+          audio.removeEventListener('loadeddata', onReady);
+          audio.removeEventListener('error', onError);
+        };
+        audio.addEventListener('canplay', onReady, {once:true});
+        audio.addEventListener('loadeddata', onReady, {once:true});
+        audio.addEventListener('error', onError, {once:true});
+      });
+    }
+
     async function startMusic(){
       const errEl = document.getElementById('musicError');
       errEl.style.display = 'none';
@@ -1460,22 +1487,37 @@
       bgm.muted = false;
       bgm.volume = 0.85;
 
-      // Перечитываем источник после первого клика пользователя.
-      if (bgm.readyState === 0) bgm.load();
+      let lastError = null;
 
-      try{
-        await bgm.play();
-        updateMusicUI();
-        return true;
-      }catch(err){
-        console.error('Music playback error:', err);
-        updateMusicUI();
-        errEl.style.display = 'inline';
-        errEl.textContent = currentLang === 'ru'
-          ? 'Файл музыки не найден'
-          : 'Әуен файлы табылмады';
-        return false;
+      for(const src of AUDIO_CANDIDATES){
+        try{
+          bgm.pause();
+          bgm.removeAttribute('src');
+          bgm.load();
+
+          bgm.src = src;
+          bgm.load();
+
+          await waitForAudioReady(bgm);
+          await bgm.play();
+
+          console.log('Music source:', src);
+          updateMusicUI();
+          return true;
+        }catch(err){
+          lastError = err;
+          console.warn('Music source failed:', src, err);
+        }
       }
+
+      updateMusicUI();
+      errEl.style.display = 'inline';
+      errEl.textContent = currentLang === 'ru'
+        ? 'Аудиофайл пока не загрузился'
+        : 'Әуен файлы әзірге жүктелмеді';
+
+      console.error('All audio sources failed:', lastError);
+      return false;
     }
 
     async function enterSite(lang){
@@ -1515,12 +1557,7 @@
       document.getElementById('musicError').style.display = 'none';
     });
     bgm.addEventListener('error', () => {
-      const errEl = document.getElementById('musicError');
-      errEl.style.display = 'inline';
-      errEl.textContent = currentLang === 'ru'
-        ? 'Проверьте файл tusaukeser.mp3'
-        : 'tusaukeser.mp3 файлын тексеріңіз';
-      console.error('Audio error code:', bgm.error && bgm.error.code);
+      console.warn('Audio element error:', bgm.error && bgm.error.code, bgm.currentSrc);
     });
 
     // Calendar
