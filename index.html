@@ -172,56 +172,49 @@
 
     .hero-photo-wrap{
       position:relative;
-      width:210px;
-      height:210px;
-      margin:4px auto 20px;
+      width:250px;
+      height:250px;
+      margin:4px auto 22px;
       display:grid;
       place-items:center;
-      filter:drop-shadow(0 18px 28px rgba(79,143,200,.14));
+      filter:drop-shadow(0 18px 30px rgba(79,143,200,.16));
       animation:float 5s ease-in-out infinite;
     }
-    .hero-photo-wrap::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      border-radius:50%;
-      background:
-        radial-gradient(circle at center, rgba(255,255,255,0) 38%, rgba(120,184,230,.14) 38.5%, rgba(120,184,230,.14) 40%, rgba(255,255,255,0) 40.5%),
-        repeating-conic-gradient(from 0deg, rgba(79,143,200,.72) 0deg 2deg, rgba(255,255,255,0) 2deg 15deg);
-      mask: radial-gradient(circle at center, transparent 0 40%, #000 40.5% 100%);
-      opacity:.8;
-      z-index:0;
-    }
+    .hero-photo-wrap::before,
     .hero-photo-wrap::after{
-      content:"";
-      position:absolute;
-      inset:14px;
-      border-radius:50%;
-      border:2px solid rgba(119,184,230,.42);
-      box-shadow: inset 0 0 0 2px rgba(191,227,251,.55);
-      z-index:1;
+      display:none;
     }
     .hero-photo{
       position:absolute;
       left:50%;
       top:50%;
       transform:translate(-50%,-50%);
-      z-index:2;
-      width:168px;
-      height:168px;
+      z-index:1;
+      width:184px;
+      height:184px;
       object-fit:cover;
       object-position:50% 50%;
       border-radius:50%;
-      border:5px solid rgba(255,255,255,.98);
-      box-shadow:0 10px 20px rgba(79,143,200,.14);
-      animation:pulseRing 3.2s ease-in-out infinite;
+      border:4px solid rgba(255,255,255,.98);
+      box-shadow:0 10px 24px rgba(79,143,200,.15);
       background:#eef7ff;
+    }
+    .hero-photo-frame{
+      position:absolute;
+      inset:0;
+      z-index:2;
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      pointer-events:none;
+      user-select:none;
+      filter:drop-shadow(0 7px 14px rgba(79,143,200,.12));
     }
     .photo-badge{
       position:absolute;
       right:2px;
       bottom:16px;
-      z-index:3;
+      z-index:4;
       min-width:50px;
       height:50px;
       padding:0 10px;
@@ -551,8 +544,8 @@
       .ornament img{width:min(100%, 290px)}
       .inner{padding:26px 16px}
       .hero .inner{padding:28px 16px 32px}
-      .hero-photo-wrap{width:176px;height:176px;margin-bottom:18px}
-      .hero-photo{width:140px;height:140px}
+      .hero-photo-wrap{width:210px;height:210px;margin-bottom:18px}
+      .hero-photo{width:154px;height:154px}
       .lead,.text{font-size:15.5px}
       .unit{min-width:72px}
       .number{font-size:27px}
@@ -678,7 +671,7 @@
 <body>
 
   <audio id="bgm" preload="auto" loop>
-    <source src="./Жазира Байырбекова - Тұсаукесер.mp3" type="audio/mpeg">
+    <source src="./tusaukeser.mp3" type="audio/mpeg">
   </audio>
 
   <div class="language-gate" id="languageGate" aria-modal="true" role="dialog">
@@ -702,7 +695,7 @@
     <button type="button" id="musicToggle" aria-label="Музыка">
       <svg id="musicIcon" viewBox="0 0 24 24" fill="none"><path d="M9 7.5v9l8-4.5-8-4.5Z" fill="currentColor"/></svg>
     </button>
-    <span id="musicLabel">Әуен</span>
+    <span id="musicLabel">Әуен</span><span id="musicError" style="display:none;color:#b34a4a;font-size:10px"></span>
   </div>
 
   <iframe name="rsvpSink" id="rsvpSink" title="RSVP" style="display:none"></iframe>
@@ -715,6 +708,7 @@
       <div class="inner">
         <div class="hero-photo-wrap">
           <img class="hero-photo" src="./1_photo.jpeg" alt="Дінмұхамед">
+          <img class="hero-photo-frame" src="./4_photo_frame.png" alt="" aria-hidden="true">
           <div class="photo-badge" id="photoBadge">1 жас</div>
         </div>
 
@@ -966,14 +960,39 @@
       document.querySelectorAll('[data-switch-lang]').forEach(btn=>btn.classList.toggle('active',btn.dataset.switchLang===lang));
     }
 
+    async function startMusic(){
+      const errEl = document.getElementById('musicError');
+      errEl.style.display = 'none';
+      errEl.textContent = '';
+
+      bgm.muted = false;
+      bgm.volume = 0.85;
+
+      // Перечитываем источник после первого клика пользователя.
+      if (bgm.readyState === 0) bgm.load();
+
+      try{
+        await bgm.play();
+        updateMusicUI();
+        return true;
+      }catch(err){
+        console.error('Music playback error:', err);
+        updateMusicUI();
+        errEl.style.display = 'inline';
+        errEl.textContent = currentLang === 'ru'
+          ? 'Файл музыки не найден'
+          : 'Әуен файлы табылмады';
+        return false;
+      }
+    }
+
     async function enterSite(lang){
       setLanguage(lang);
       languageGate.classList.add('hide');
       document.body.style.overflow = '';
       langSwitch.classList.add('show');
       musicFab.classList.add('show');
-      try{ await bgm.play(); }catch(e){}
-      updateMusicUI();
+      await startMusic();
     }
 
     document.body.style.overflow = 'hidden';
@@ -990,11 +1009,27 @@
     }
 
     musicToggle.addEventListener('click', async()=>{
-      if(bgm.paused){ try{ await bgm.play(); }catch(e){} } else { bgm.pause(); }
-      updateMusicUI();
+      if(bgm.paused){
+        await startMusic();
+      }else{
+        bgm.pause();
+        updateMusicUI();
+      }
     });
-    bgm.addEventListener('play',updateMusicUI);
-    bgm.addEventListener('pause',updateMusicUI);
+
+    bgm.addEventListener('play', updateMusicUI);
+    bgm.addEventListener('pause', updateMusicUI);
+    bgm.addEventListener('canplay', () => {
+      document.getElementById('musicError').style.display = 'none';
+    });
+    bgm.addEventListener('error', () => {
+      const errEl = document.getElementById('musicError');
+      errEl.style.display = 'inline';
+      errEl.textContent = currentLang === 'ru'
+        ? 'Проверьте файл tusaukeser.mp3'
+        : 'tusaukeser.mp3 файлын тексеріңіз';
+      console.error('Audio error code:', bgm.error && bgm.error.code);
+    });
 
     // Calendar
     (function buildCalendar(){
