@@ -666,6 +666,496 @@
       .music-fab{padding:7px}
     }
 
+  
+    /* ===== FINAL VISUAL POLISH ===== */
+
+    :root{
+      --sky-0:#fbfdff;
+      --sky-1:#eef8ff;
+      --sky-2:#dff2ff;
+      --sky-3:#bfe6ff;
+      --sky-4:#7fc7f2;
+      --sky-5:#4e9ed4;
+      --sky-6:#337db5;
+      --glass:rgba(255,255,255,.82);
+    }
+
+    body{
+      background:
+        radial-gradient(900px 620px at 4% 8%, rgba(155,214,249,.38), transparent 62%),
+        radial-gradient(800px 600px at 96% 18%, rgba(108,190,239,.23), transparent 60%),
+        radial-gradient(720px 620px at 22% 86%, rgba(196,231,252,.44), transparent 62%),
+        linear-gradient(180deg,var(--sky-0),var(--sky-1) 45%,#f7fbff 100%);
+    }
+
+    body::before{
+      opacity:.10;
+      background-size:92px 92px;
+    }
+
+    body::after{
+      background:
+        radial-gradient(circle at 12% 18%, rgba(126,199,242,.18), transparent 16%),
+        radial-gradient(circle at 88% 12%, rgba(183,226,252,.28), transparent 15%),
+        radial-gradient(circle at 84% 80%, rgba(126,199,242,.15), transparent 17%),
+        radial-gradient(circle at 18% 78%, rgba(209,238,255,.42), transparent 18%);
+      animation:ambientMove 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes ambientMove{
+      0%{transform:translate3d(0,0,0) scale(1)}
+      100%{transform:translate3d(0,-16px,0) scale(1.025)}
+    }
+
+    .page{
+      isolation:isolate;
+    }
+
+    /* vertical Kazakh ornaments around the whole invitation */
+    .page-decor{
+      width:104px;
+      opacity:.16;
+      filter:drop-shadow(0 10px 26px rgba(72,149,204,.10));
+      animation:ornamentFloat 8s ease-in-out infinite;
+    }
+    .page-decor.left{top:145px;left:-110px}
+    .page-decor.right{top:610px;right:-112px;left:auto;transform:scaleX(-1);animation-delay:-2.6s}
+    .page-decor-mid{
+      top:1270px;
+      left:-104px;
+      transform:scaleY(-1);
+      animation-delay:-4.1s;
+    }
+    .page-decor-low{
+      top:1980px;
+      right:-108px;
+      left:auto;
+      transform:scale(-1,1);
+      animation-delay:-5.4s;
+    }
+
+    @keyframes ornamentFloat{
+      0%,100%{translate:0 0;opacity:.14}
+      50%{translate:0 -12px;opacity:.22}
+    }
+
+    /* cards: lighter glass + actual Kazakh ornaments used as watermarks */
+    .card{
+      background:
+        linear-gradient(180deg,rgba(255,255,255,.91),rgba(249,253,255,.82));
+      border:1px solid rgba(115,186,231,.24);
+      box-shadow:
+        0 18px 48px rgba(70,126,171,.10),
+        inset 0 1px 0 rgba(255,255,255,.88);
+    }
+
+    .card::before{
+      content:"";
+      display:block;
+      width:84px;
+      height:235px;
+      left:-25px;
+      top:50%;
+      border:0;
+      border-radius:0;
+      transform:translateY(-50%);
+      background:url("./2_photo.png") center/contain no-repeat;
+      opacity:.035;
+      filter:none;
+    }
+
+    .card::after{
+      content:"";
+      display:block;
+      width:235px;
+      height:78px;
+      right:-60px;
+      bottom:-20px;
+      border:0;
+      border-radius:0;
+      transform:none;
+      background:url("./3_photo.png") center/contain no-repeat;
+      opacity:.045;
+      filter:none;
+    }
+
+    section:nth-of-type(even).card::before{
+      left:auto;
+      right:-25px;
+      transform:translateY(-50%) scaleX(-1);
+    }
+
+    section:nth-of-type(even).card::after{
+      right:auto;
+      left:-60px;
+      transform:scaleX(-1);
+    }
+
+    @media (hover:hover){
+      .card:hover{
+        transform:translateY(-3px);
+        border-color:rgba(92,170,222,.34);
+        box-shadow:
+          0 24px 62px rgba(65,126,172,.14),
+          inset 0 1px 0 rgba(255,255,255,.92);
+      }
+    }
+
+    /* Real ornament separators */
+    .ornament{
+      margin:10px auto 17px;
+      overflow:visible;
+    }
+    .ornament img{
+      width:min(92%,330px);
+      opacity:.82;
+      filter:drop-shadow(0 8px 16px rgba(74,155,210,.10));
+      animation:ornamentBreath 6s ease-in-out infinite;
+    }
+    @keyframes ornamentBreath{
+      0%,100%{transform:scale(1);opacity:.76}
+      50%{transform:scale(1.025);opacity:.92}
+    }
+
+    /* Hero gets the strongest Kazakh treatment */
+    .hero{
+      background:
+        radial-gradient(circle at 50% 8%,rgba(208,239,255,.76),transparent 33%),
+        linear-gradient(180deg,rgba(255,255,255,.95),rgba(241,250,255,.87));
+    }
+
+    .hero::before{
+      width:112px;
+      height:310px;
+      left:-24px;
+      top:52%;
+      background:url("./2_photo.png") center/contain no-repeat;
+      opacity:.065;
+    }
+    .hero::after{
+      width:112px;
+      height:310px;
+      right:-24px;
+      bottom:auto;
+      top:52%;
+      background:url("./2_photo.png") center/contain no-repeat;
+      transform:translateY(-50%) scaleX(-1);
+      opacity:.065;
+    }
+
+    /* Child photo: 4_photo_frame becomes the central visual */
+    .hero-photo-wrap{
+      width:274px;
+      height:274px;
+      margin-top:0;
+      margin-bottom:20px;
+      filter:drop-shadow(0 20px 38px rgba(62,143,199,.19));
+      animation:heroFloat 5.4s ease-in-out infinite;
+    }
+
+    .hero-photo-wrap::before,
+    .hero-photo-wrap::after{
+      content:"";
+      display:block;
+      position:absolute;
+      border-radius:50%;
+      pointer-events:none;
+    }
+
+    .hero-photo-wrap::before{
+      inset:-7px;
+      border:1px solid rgba(112,191,239,.30);
+      box-shadow:0 0 34px rgba(111,191,239,.14);
+      animation:haloPulse 3.8s ease-in-out infinite;
+    }
+
+    .hero-photo-wrap::after{
+      inset:-18px;
+      border:1px dashed rgba(115,191,235,.20);
+      animation:haloSpin 28s linear infinite;
+    }
+
+    .hero-photo{
+      width:198px;
+      height:198px;
+      z-index:1;
+      border:5px solid rgba(255,255,255,.99);
+      box-shadow:
+        0 14px 30px rgba(54,129,184,.17),
+        0 0 0 7px rgba(206,238,255,.30);
+      animation:photoBreath 5s ease-in-out infinite;
+    }
+
+    .hero-photo-frame{
+      z-index:3;
+      filter:
+        drop-shadow(0 8px 16px rgba(48,138,197,.13))
+        drop-shadow(0 0 10px rgba(118,200,245,.10));
+      animation:frameBreath 4.8s ease-in-out infinite;
+    }
+
+    .photo-badge{
+      right:5px;
+      bottom:22px;
+      z-index:5;
+      min-width:58px;
+      height:58px;
+      background:linear-gradient(145deg,#4e9ed4,#7fc7f2);
+      border:3px solid rgba(255,255,255,.88);
+      box-shadow:0 12px 25px rgba(61,140,194,.24);
+      font-size:15px;
+      line-height:1.05;
+      text-align:center;
+    }
+
+    @keyframes heroFloat{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-7px)}
+    }
+    @keyframes haloPulse{
+      0%,100%{transform:scale(.985);opacity:.45}
+      50%{transform:scale(1.025);opacity:.85}
+    }
+    @keyframes haloSpin{
+      to{transform:rotate(360deg)}
+    }
+    @keyframes photoBreath{
+      0%,100%{transform:translate(-50%,-50%) scale(1)}
+      50%{transform:translate(-50%,-50%) scale(1.018)}
+    }
+    @keyframes frameBreath{
+      0%,100%{transform:scale(1);opacity:.97}
+      50%{transform:scale(1.025);opacity:1}
+    }
+
+    .child-name{
+      background:linear-gradient(135deg,#2f75ac,#5db5e8 58%,#337fb5);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      text-shadow:none;
+      filter:drop-shadow(0 9px 14px rgba(88,167,218,.13));
+    }
+
+    .tusau,
+    .hero-title,
+    .script-title,
+    .section-title{
+      text-wrap:balance;
+    }
+
+    .tusau{
+      color:#4e9ed4;
+    }
+
+    .hero-title{
+      color:#3a7eaf;
+      font-size:clamp(28px,7.4vw,46px);
+    }
+
+    .lead,.text{
+      color:#41586c;
+    }
+
+    /* More elegant details */
+    .detail{
+      overflow:hidden;
+      background:
+        linear-gradient(150deg,rgba(255,255,255,.82),rgba(235,248,255,.60));
+      border-color:rgba(111,184,229,.22);
+      transition:transform .22s ease,border-color .22s ease;
+    }
+    .detail::after{
+      content:"";
+      position:absolute;
+      inset:auto -20px -38px auto;
+      width:140px;
+      height:70px;
+      background:url("./3_photo.png") center/contain no-repeat;
+      opacity:.06;
+      pointer-events:none;
+    }
+    @media (hover:hover){
+      .detail:hover{transform:translateY(-2px);border-color:rgba(83,164,218,.32)}
+    }
+
+    .calendar{
+      box-shadow:inset 0 0 28px rgba(116,190,234,.04);
+    }
+    .grid .selected::before{
+      animation:selectedDate 2.5s ease-in-out infinite;
+    }
+    @keyframes selectedDate{
+      0%,100%{transform:scale(1);box-shadow:0 8px 18px rgba(86,163,214,.20)}
+      50%{transform:scale(1.09);box-shadow:0 10px 25px rgba(86,163,214,.30)}
+    }
+
+    .number{
+      position:relative;
+      overflow:hidden;
+      background:linear-gradient(145deg,#387fb5,#67b9e7);
+      box-shadow:0 12px 25px rgba(69,143,195,.19);
+    }
+    .number::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(115deg,transparent 25%,rgba(255,255,255,.22) 43%,transparent 60%);
+      transform:translateX(-120%);
+      animation:numberShine 5.2s ease-in-out infinite;
+    }
+    @keyframes numberShine{
+      0%,62%,100%{transform:translateX(-130%)}
+      77%{transform:translateX(130%)}
+    }
+
+    .mapbtn,.primary-btn{
+      background:linear-gradient(135deg,#3e88be,#70bee9);
+      box-shadow:0 13px 26px rgba(62,145,201,.22);
+    }
+
+    .radio{
+      transition:border-color .2s ease,background .2s ease,transform .2s ease;
+    }
+    .radio:has(input:checked){
+      border-color:rgba(73,159,215,.42);
+      background:rgba(218,242,255,.55);
+      transform:translateX(2px);
+    }
+
+    .input:focus{
+      border-color:rgba(70,158,216,.58);
+      box-shadow:0 0 0 4px rgba(114,194,239,.12);
+    }
+
+    /* Language gate */
+    .language-gate{
+      background:
+        radial-gradient(circle at 50% 12%,rgba(183,228,254,.72),transparent 31%),
+        linear-gradient(180deg,rgba(239,249,255,.98),rgba(221,242,255,.97));
+      overflow:hidden;
+    }
+    .language-gate::before,
+    .language-gate::after{
+      content:"";
+      position:absolute;
+      width:145px;
+      height:430px;
+      top:50%;
+      transform:translateY(-50%);
+      background:url("./2_photo.png") center/contain no-repeat;
+      opacity:.09;
+      pointer-events:none;
+    }
+    .language-gate::before{left:-46px}
+    .language-gate::after{right:-46px;transform:translateY(-50%) scaleX(-1)}
+    .language-card{
+      border-color:rgba(91,176,229,.26);
+      background:rgba(255,255,255,.82);
+      box-shadow:0 28px 80px rgba(57,130,184,.17);
+      animation:gateIn .7s cubic-bezier(.2,.8,.2,1) both;
+    }
+    @keyframes gateIn{
+      from{opacity:0;transform:translateY(14px) scale(.97)}
+      to{opacity:1;transform:none}
+    }
+    .language-ornament{
+      animation:ornamentBreath 5.5s ease-in-out infinite;
+    }
+    .language-btn{
+      position:relative;
+      overflow:hidden;
+      transition:transform .2s ease,box-shadow .2s ease;
+    }
+    .language-btn::after{
+      content:"";
+      position:absolute;
+      inset:-40% auto -40% -30%;
+      width:34%;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,.65),transparent);
+      transform:translateX(-160%) skewX(-18deg);
+    }
+    .language-btn:hover::after{animation:sheen .8s ease}
+    .language-btn:hover{transform:translateY(-2px)}
+
+    /* Music button glows only when music actually plays */
+    .music-fab{
+      transition:transform .25s ease,box-shadow .25s ease;
+      border-color:rgba(87,169,220,.22);
+      background:rgba(255,255,255,.91);
+    }
+    .music-fab.playing{
+      box-shadow:
+        0 18px 45px rgba(62,143,199,.18),
+        0 0 0 7px rgba(110,194,240,.08);
+    }
+    .music-fab.playing button{
+      animation:musicPulse 2.2s ease-in-out infinite;
+    }
+    @keyframes musicPulse{
+      0%,100%{transform:scale(1)}
+      50%{transform:scale(1.07)}
+    }
+
+    /* Reveal cards as the guest scrolls */
+    section.card.scroll-reveal{
+      opacity:0;
+      transform:translateY(26px) scale(.985);
+      transition:
+        opacity .75s cubic-bezier(.2,.8,.2,1),
+        transform .75s cubic-bezier(.2,.8,.2,1),
+        box-shadow .25s ease,
+        border-color .25s ease;
+    }
+    section.card.scroll-reveal.in-view{
+      opacity:1;
+      transform:none;
+    }
+
+    @media(max-width:700px){
+      .page-decor{opacity:.085;width:76px}
+      .page-decor.left{left:-58px}
+      .page-decor.right{right:-58px}
+      .page-decor-mid{left:-56px}
+      .page-decor-low{right:-58px}
+
+      .card::before{
+        width:68px;
+        height:180px;
+        opacity:.026;
+      }
+      .card::after{
+        width:185px;
+        height:62px;
+        opacity:.032;
+      }
+
+      .hero-photo-wrap{width:232px;height:232px}
+      .hero-photo{width:168px;height:168px}
+      .photo-badge{
+        width:auto;
+        min-width:52px;
+        height:52px;
+        right:3px;
+        bottom:17px;
+      }
+    }
+
+    @media(max-width:420px){
+      .hero-photo-wrap{width:214px;height:214px}
+      .hero-photo{width:154px;height:154px}
+      .ornament img{width:min(94%,285px)}
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        scroll-behavior:auto !important;
+        transition-duration:.01ms !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -703,6 +1193,8 @@
   <main class="page">
     <img class="page-decor left" src="./2_photo.png" alt="">
     <img class="page-decor right" src="./2_photo.png" alt="">
+    <img class="page-decor page-decor-mid" src="./2_photo.png" alt="">
+    <img class="page-decor page-decor-low" src="./2_photo.png" alt="">
 
     <section class="card hero">
       <div class="inner">
@@ -1108,6 +1600,44 @@
     });
 
     setLanguage('kk');
+  
+    // Final polish: scroll reveal + real music state indicator.
+    (function(){
+      const cards = [...document.querySelectorAll('section.card')];
+      cards.forEach((card,index)=>{
+        if(index === 0){
+          card.classList.add('in-view');
+          return;
+        }
+        card.classList.add('scroll-reveal');
+      });
+
+      if('IntersectionObserver' in window){
+        const observer = new IntersectionObserver((entries)=>{
+          entries.forEach(entry=>{
+            if(entry.isIntersecting){
+              entry.target.classList.add('in-view');
+              observer.unobserve(entry.target);
+            }
+          });
+        },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+        document.querySelectorAll('.scroll-reveal').forEach(el=>observer.observe(el));
+      }else{
+        document.querySelectorAll('.scroll-reveal').forEach(el=>el.classList.add('in-view'));
+      }
+
+      const syncMusicState=()=>{
+        if(typeof musicFab !== 'undefined' && musicFab){
+          musicFab.classList.toggle('playing', !bgm.paused && !bgm.ended);
+        }
+      };
+      bgm.addEventListener('play',syncMusicState);
+      bgm.addEventListener('pause',syncMusicState);
+      bgm.addEventListener('ended',syncMusicState);
+      bgm.addEventListener('error',syncMusicState);
+      syncMusicState();
+    })();
+
   </script>
 </body>
 </html>
