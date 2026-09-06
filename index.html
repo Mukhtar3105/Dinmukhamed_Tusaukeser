@@ -175,11 +175,15 @@
       z-index:1;
     }
     .hero-photo{
-      position:relative;
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
       z-index:2;
       width:168px;
       height:168px;
       object-fit:cover;
+      object-position:50% 50%;
       border-radius:50%;
       border:5px solid rgba(255,253,248,.96);
       box-shadow:0 10px 20px rgba(15,63,70,.14);
@@ -501,70 +505,6 @@
 
     .footer-note{margin-top:18px;font-size:14px;line-height:1.8;color:#748082}
 
-    .music-modal{
-      position:fixed;
-      inset:0;
-      display:none;
-      align-items:flex-end;
-      justify-content:center;
-      z-index:9999;
-      padding:16px;
-      background:rgba(9,30,32,.28);
-    }
-    .music-modal.show{display:flex}
-    .music-sheet{
-      width:min(520px,96vw);
-      border-radius:24px;
-      border:1px solid rgba(184,138,53,.28);
-      background:rgba(255,253,248,.96);
-      box-shadow:0 24px 70px rgba(0,0,0,.20);
-      padding:20px 17px 17px;
-      text-align:center;
-    }
-    .music-title{font:700 22px/1.2 "Noto Serif Display", serif;color:var(--jade-dark)}
-    .music-hint{margin-top:7px;font-size:13px;color:#758082;line-height:1.5}
-    .music-actions{display:flex;gap:10px;justify-content:center;margin-top:14px}
-    .chip{
-      border:none;border-radius:999px;padding:12px 19px;cursor:pointer;
-      font:700 13px/1 "Noto Serif", serif;letter-spacing:.08em;text-transform:uppercase
-    }
-    .chip.yes{background:linear-gradient(135deg,var(--jade-dark),var(--jade));color:#fff}
-    .chip.no{background:#eee9df;color:#596668}
-
-    .music-fab{
-      position:fixed;
-      right:14px;
-      bottom:14px;
-      z-index:9998;
-      display:none;
-      align-items:center;
-      gap:8px;
-      padding:8px 10px 8px 8px;
-      border-radius:999px;
-      border:1px solid rgba(184,138,53,.28);
-      background:rgba(255,253,248,.92);
-      box-shadow:0 16px 40px rgba(15,63,70,.18);
-      backdrop-filter:blur(7px);
-    }
-    .music-fab button{
-      width:42px;height:42px;border:none;border-radius:50%;cursor:pointer;color:#fff;
-      background:linear-gradient(135deg,var(--gold),var(--gold2));display:grid;place-items:center
-    }
-    .music-fab svg{width:18px;height:18px}
-    .music-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#687577;font-weight:700}
-
-
-    /* Қазақ мәтініне арналған бірыңғай типографика */
-    .hero-title, .child-name, .tusau, .script-title, .section-title,
-    .koss, .detail-main, .cal-head, .quote, .blessing, .music-title{
-      font-family:"Noto Serif Display", serif;
-    }
-    .lead, .text, .detail-sub, .field-label, .radio, .form-hint,
-    .footer-note, .topline, .count-title, .lab, .mapbtn, .primary-btn,
-    .chip, .music-hint, .music-label, input, select, textarea, button{
-      font-family:"Noto Serif", serif;
-    }
-
     @media(max-width:420px){
       .page{width:min(94vw,var(--max));padding-top:10px}
       .inner{padding:26px 16px}
@@ -579,30 +519,6 @@
   </style>
 </head>
 <body>
-  <audio id="bgm" preload="auto" loop>
-    <source src="./Erkesh_Hasen_-_yzym_(SkySound.cc).mp3" type="audio/mpeg">
-  </audio>
-
-  <div class="music-modal" id="musicModal" aria-hidden="true">
-    <div class="music-sheet">
-      <div class="music-title">Әуенді қосайық па?</div>
-      <div class="music-hint">Шақыру парағын әуенмен тамашалау үшін «Иә» батырмасын басыңыз.</div>
-      <div class="music-actions">
-        <button class="chip yes" id="musicYes" type="button">Иә</button>
-        <button class="chip no" id="musicNo" type="button">Жоқ</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="music-fab" id="musicFab">
-    <button type="button" id="musicToggle" aria-label="Әуен">
-      <svg id="musicIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M9 7.5v9l8-4.5-8-4.5Z" fill="currentColor"/>
-      </svg>
-    </button>
-    <div class="music-label" id="musicLabel">Әуен</div>
-  </div>
-
   <main class="page">
 
     <section class="card hero">
@@ -820,77 +736,10 @@
     tick();
     setInterval(tick,1000);
 
-    // ---- Әуен ----
-    const bgm = document.getElementById('bgm');
-    const modal = document.getElementById('musicModal');
-    const btnYes = document.getElementById('musicYes');
-    const btnNo = document.getElementById('musicNo');
-    const fab = document.getElementById('musicFab');
-    const toggle = document.getElementById('musicToggle');
-    const icon = document.getElementById('musicIcon');
-    const musicLabel = document.getElementById('musicLabel');
-
-    function setMusicIcon(playing){
-      icon.innerHTML = playing
-        ? '<path d="M7 6.5h3.2v11H7v-11Zm6.8 0H17v11h-3.2v-11Z" fill="currentColor"/>'
-        : '<path d="M9 7.5v9l8-4.5-8-4.5Z" fill="currentColor"/>';
-      musicLabel.textContent = playing ? 'Әуен: қосулы' : 'Әуен: өшірулі';
-    }
-
-    async function tryAutoPlay(){
-      fab.style.display = 'flex';
-      const pref = localStorage.getItem('kaz_invite_music');
-      if(pref === 'no'){ setMusicIcon(false); return; }
-      try{
-        await bgm.play();
-        setMusicIcon(true);
-      }catch(e){
-        modal.classList.add('show');
-        modal.setAttribute('aria-hidden','false');
-        setMusicIcon(false);
-      }
-    }
-
-    btnYes.addEventListener('click', async () => {
-      localStorage.setItem('kaz_invite_music','yes');
-      modal.classList.remove('show');
-      modal.setAttribute('aria-hidden','true');
-      try{ await bgm.play(); setMusicIcon(true); }
-      catch(e){ setMusicIcon(false); }
-    });
-
-    btnNo.addEventListener('click', () => {
-      localStorage.setItem('kaz_invite_music','no');
-      modal.classList.remove('show');
-      modal.setAttribute('aria-hidden','true');
-      bgm.pause();
-      setMusicIcon(false);
-    });
-
-    toggle.addEventListener('click', async () => {
-      if(bgm.paused){
-        try{
-          await bgm.play();
-          localStorage.setItem('kaz_invite_music','yes');
-          setMusicIcon(true);
-        }catch(e){
-          modal.classList.add('show');
-          modal.setAttribute('aria-hidden','false');
-        }
-      }else{
-        bgm.pause();
-        localStorage.setItem('kaz_invite_music','no');
-        setMusicIcon(false);
-      }
-    });
-
-    window.addEventListener('load', tryAutoPlay);
-
     // ---- RSVP / Google Sheets ----
     // 1) Google Sheets ішінде Apps Script ашыңыз.
     // 2) Берілген Code.gs кодын салыңыз және Web App ретінде жариялаңыз.
-    // 3) Төмендегі сілтемені өз Web App URL-іңізге ауыстырыңыз.
-    const APPS_SCRIPT_URL = 'PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE';
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyDZt9hTc1T8KIA42kdY3hwJGSuc8Z0S4ca-xCzRLnftPa86bfyAwcWvHzVEOCs5mM/exec';
 
     const form = document.getElementById('rsvpForm');
     const statusEl = document.getElementById('status');
