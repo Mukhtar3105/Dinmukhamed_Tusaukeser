@@ -3,30 +3,30 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="theme-color" content="#0f3f46" />
-  <title>Қос қуаныш — Дінмұхамедтің тұсаукесері</title>
+  <meta name="theme-color" content="#6baedc" />
+  <title>Дінмұхамед — тұсаукесері және анамыздың зейнетке шығу тойы</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600;700&family=Noto+Serif+Display:wght@500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      --ivory:#f7f1e5;
-      --paper:#fffdf8;
-      --ink:#273436;
-      --muted:#687476;
-      --jade:#1f6a70;
-      --jade-dark:#0f3f46;
-      --jade-light:#4f9293;
-      --gold:#b88a35;
-      --gold2:#d6b66f;
-      --gold-soft:rgba(184,138,53,.14);
-      --line:rgba(184,138,53,.30);
-      --card:rgba(255,253,248,.88);
-      --shadow:0 22px 60px rgba(23,54,57,.13);
-      --shadow-soft:0 14px 34px rgba(23,54,57,.08);
-      --radius:30px;
+     :root{
+      --ivory:#f5fbff;
+      --paper:#ffffff;
+      --ink:#22384d;
+      --muted:#6f8497;
+      --jade:#77b8e6;
+      --jade-dark:#4f8fc8;
+      --jade-light:#bfe3fb;
+      --gold:#78b8e6;
+      --gold2:#cfeaff;
+      --gold-soft:rgba(120,184,230,.12);
+      --line:rgba(119,184,230,.26);
+      --card:rgba(255,255,255,.90);
+      --shadow:0 24px 60px rgba(62,116,170,.14);
+      --shadow-soft:0 14px 34px rgba(71,125,177,.10);
+      --radius:32px;
       --max:620px;
     }
 
@@ -37,10 +37,10 @@
       color:var(--ink);
       font-family:"Noto Serif", serif;
       background:
-        radial-gradient(900px 650px at 12% 7%, rgba(214,182,111,.22), transparent 55%),
-        radial-gradient(780px 600px at 92% 18%, rgba(31,106,112,.14), transparent 54%),
-        radial-gradient(760px 650px at 15% 88%, rgba(31,106,112,.10), transparent 55%),
-        linear-gradient(180deg,#fbf7ef 0%,#f5ecdd 45%,#f8f2e7 100%);
+        radial-gradient(900px 650px at 12% 7%, rgba(159,208,240,.38), transparent 55%),
+        radial-gradient(780px 600px at 92% 18%, rgba(119,184,230,.25), transparent 54%),
+        radial-gradient(760px 650px at 15% 88%, rgba(191,227,251,.36), transparent 55%),
+        linear-gradient(180deg,#f7fbff 0%,#eef7ff 45%,#f4faff 100%);
       overflow-x:hidden;
       -webkit-font-smoothing:antialiased;
       text-rendering:optimizeLegibility;
@@ -52,11 +52,24 @@
       inset:0;
       z-index:-3;
       pointer-events:none;
-      opacity:.20;
+      opacity:.22;
       background-image:
-        linear-gradient(45deg, transparent 47%, rgba(184,138,53,.12) 48%, rgba(184,138,53,.12) 52%, transparent 53%),
-        linear-gradient(-45deg, transparent 47%, rgba(31,106,112,.08) 48%, rgba(31,106,112,.08) 52%, transparent 53%);
-      background-size:64px 64px;
+        linear-gradient(45deg, transparent 47%, rgba(119,184,230,.10) 48%, rgba(119,184,230,.10) 52%, transparent 53%),
+        linear-gradient(-45deg, transparent 47%, rgba(120,184,230,.08) 48%, rgba(120,184,230,.08) 52%, transparent 53%);
+      background-size:72px 72px;
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 18% 22%, rgba(119,184,230,.18) 0 9%, transparent 10%),
+        radial-gradient(circle at 84% 12%, rgba(120,184,230,.10) 0 7%, transparent 8%),
+        radial-gradient(circle at 78% 74%, rgba(119,184,230,.14) 0 8%, transparent 9%);
+      animation:bgFloat 18s ease-in-out infinite alternate;
     }
 
     .page{
@@ -66,7 +79,12 @@
       position:relative;
     }
 
-    section{margin:16px 0;position:relative}
+    section{margin:16px 0;position:relative;animation:fadeUp .85s ease both}
+    section:nth-of-type(2){animation-delay:.08s}
+    section:nth-of-type(3){animation-delay:.16s}
+    section:nth-of-type(4){animation-delay:.24s}
+    section:nth-of-type(5){animation-delay:.32s}
+    section:nth-of-type(6){animation-delay:.4s}
 
     .card{
       position:relative;
@@ -75,6 +93,7 @@
       border-radius:var(--radius);
       background:var(--card);
       box-shadow:var(--shadow-soft);
+      transition:transform .25s ease, box-shadow .25s ease;
       backdrop-filter:blur(8px);
       -webkit-backdrop-filter:blur(8px);
     }
@@ -88,14 +107,19 @@
       opacity:.55;
       pointer-events:none;
     }
+
+    @media (hover:hover){
+      .card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+    }
+
     .card::before{
       left:-25px;top:-25px;
-      border:2px solid var(--gold2);
+      border:2px solid rgba(120,184,230,.42);
       transform:rotate(45deg);
     }
     .card::after{
       right:-25px;bottom:-25px;
-      border:2px solid var(--jade-light);
+      border:2px solid rgba(119,184,230,.45);
       transform:rotate(45deg);
     }
 
@@ -105,8 +129,9 @@
       font-size:12px;
       letter-spacing:.16em;
       text-transform:uppercase;
-      color:var(--jade);
+      color:var(--jade-dark);
       font-weight:700;
+      text-shadow:0 8px 16px rgba(119,184,230,.14);
       margin-bottom:14px;
     }
 
@@ -116,18 +141,18 @@
       justify-content:center;
       gap:12px;
       margin:12px auto 18px;
-      color:var(--gold);
+      color:var(--jade-dark);
       max-width:360px;
     }
     .ornament::before,.ornament::after{
       content:"";
       height:1px;
       flex:1;
-      background:linear-gradient(90deg,transparent,var(--gold2),transparent);
+      background:linear-gradient(90deg,transparent,var(--jade-light),transparent);
     }
     .ornament-mark{
       width:34px;height:34px;
-      border:1px solid rgba(184,138,53,.5);
+      border:1px solid rgba(119,184,230,.50);
       transform:rotate(45deg);
       display:grid;
       place-items:center;
@@ -151,7 +176,8 @@
       margin:4px auto 20px;
       display:grid;
       place-items:center;
-      filter:drop-shadow(0 18px 28px rgba(15,63,70,.12));
+      filter:drop-shadow(0 18px 28px rgba(79,143,200,.14));
+      animation:float 5s ease-in-out infinite;
     }
     .hero-photo-wrap::before{
       content:"";
@@ -159,8 +185,8 @@
       inset:0;
       border-radius:50%;
       background:
-        radial-gradient(circle at center, rgba(255,255,255,0) 38%, rgba(184,138,53,.14) 38.5%, rgba(184,138,53,.14) 40%, rgba(255,255,255,0) 40.5%),
-        repeating-conic-gradient(from 0deg, rgba(184,138,53,.85) 0deg 2deg, rgba(255,255,255,0) 2deg 15deg);
+        radial-gradient(circle at center, rgba(255,255,255,0) 38%, rgba(120,184,230,.14) 38.5%, rgba(120,184,230,.14) 40%, rgba(255,255,255,0) 40.5%),
+        repeating-conic-gradient(from 0deg, rgba(79,143,200,.72) 0deg 2deg, rgba(255,255,255,0) 2deg 15deg);
       mask: radial-gradient(circle at center, transparent 0 40%, #000 40.5% 100%);
       opacity:.8;
       z-index:0;
@@ -170,8 +196,8 @@
       position:absolute;
       inset:14px;
       border-radius:50%;
-      border:2px solid rgba(31,106,112,.42);
-      box-shadow: inset 0 0 0 2px rgba(214,182,111,.45);
+      border:2px solid rgba(119,184,230,.42);
+      box-shadow: inset 0 0 0 2px rgba(191,227,251,.55);
       z-index:1;
     }
     .hero-photo{
@@ -185,9 +211,10 @@
       object-fit:cover;
       object-position:50% 50%;
       border-radius:50%;
-      border:5px solid rgba(255,253,248,.96);
-      box-shadow:0 10px 20px rgba(15,63,70,.14);
-      background:#efe8da;
+      border:5px solid rgba(255,255,255,.98);
+      box-shadow:0 10px 20px rgba(79,143,200,.14);
+      animation:pulseRing 3.2s ease-in-out infinite;
+      background:#eef7ff;
     }
     .photo-badge{
       position:absolute;
@@ -201,9 +228,9 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      background:linear-gradient(135deg,var(--gold),var(--gold2));
+      background:linear-gradient(135deg,var(--jade-dark),var(--jade));
       color:#fff;
-      box-shadow:0 12px 20px rgba(184,138,53,.28);
+      box-shadow:0 12px 20px rgba(79,143,200,.22);
       font:700 19px/1 "Noto Serif Display", serif;
       letter-spacing:.02em;
     }
@@ -212,15 +239,19 @@
       width:118px;
       height:118px;
       margin:0 auto 16px;
-      filter:drop-shadow(0 10px 18px rgba(184,138,53,.12));
+      filter:drop-shadow(0 10px 18px rgba(119,184,230,.12));
       animation:float 5s ease-in-out infinite;
     }
     @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+    @keyframes bgFloat{0%{transform:translateY(0) scale(1)}100%{transform:translateY(-12px) scale(1.02)}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes pulseRing{0%,100%{box-shadow:0 10px 20px rgba(79,143,200,.12),0 0 0 0 rgba(119,184,230,.16)}50%{box-shadow:0 14px 28px rgba(79,143,200,.18),0 0 0 10px rgba(119,184,230,0)}}
+    @keyframes sheen{0%{transform:translateX(-140%) skewX(-18deg)}100%{transform:translateX(240%) skewX(-18deg)}}
 
     .koss{
       margin:0;
       font-family:"Noto Serif Display", serif;
-      font-size:clamp(19px,5vw,25px);
+      font-size:clamp(18px,4.8vw,24px);
       text-transform:uppercase;
       letter-spacing:.10em;
       color:var(--jade-dark);
@@ -232,7 +263,7 @@
       font-family:"Noto Serif Display", serif;
       font-size:clamp(31px,8vw,50px);
       line-height:1.22;
-      color:var(--gold);
+      color:var(--jade-dark);
       font-weight:700;
       letter-spacing:.01em;
     }
@@ -259,8 +290,8 @@
       margin:8px 0 0;
       font-family:"Noto Serif Display", serif;
       font-size:clamp(31px,8vw,46px);
-      color:var(--gold);
-      line-height:1.22;
+      color:var(--jade-dark);
+      line-height:1.2;
       font-weight:700;
       letter-spacing:.01em;
     }
@@ -291,12 +322,13 @@
       border:none;
       border-radius:999px;
       color:var(--jade-dark);
-      background:rgba(31,106,112,.08);
+      background:rgba(119,184,230,.16);
       font:600 13px/1 "Noto Serif",serif;
       letter-spacing:.12em;
       text-transform:uppercase;
       cursor:pointer;
     }
+    .scroll-btn:hover{transform:translateY(-1px)}
     .scroll-btn svg{width:17px;height:17px;animation:bob 1.8s ease-in-out infinite}
     @keyframes bob{0%,100%{transform:translateY(-2px)}50%{transform:translateY(3px)}}
 
@@ -304,7 +336,7 @@
       margin:0;
       font-family:"Noto Serif Display", serif;
       font-size:clamp(34px,8.2vw,48px);
-      color:var(--gold);
+      color:var(--jade-dark);
       line-height:1.18;
       font-weight:700;
     }
@@ -326,7 +358,7 @@
     }
 
     .em{color:var(--jade-dark);font-weight:700}
-    .gold{color:var(--gold);font-weight:700}
+    .gold{color:var(--jade-dark);font-weight:700}
 
     .details{
       display:grid;
@@ -338,7 +370,7 @@
       position:relative;
       padding:22px 18px;
       border-radius:24px;
-      border:1px solid rgba(184,138,53,.24);
+      border:1px solid rgba(119,184,230,.24);
       background:rgba(255,255,255,.54);
     }
     .detail-label{
@@ -371,13 +403,17 @@
       text-decoration:none;
       color:#fff !important;
       background:linear-gradient(135deg,var(--jade-dark),var(--jade));
-      box-shadow:0 13px 24px rgba(15,63,70,.18);
+      box-shadow:0 13px 24px rgba(79,143,200,.24);
       font:700 13px/1 "Noto Serif", serif;
       letter-spacing:.10em;
       text-transform:uppercase;
       cursor:pointer;
       transition:transform .15s ease,filter .15s ease;
+      position:relative;
+      overflow:hidden;
     }
+    .mapbtn::after,.primary-btn::after{content:"";position:absolute;inset:-60% auto -60% -30%;width:38%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:translateX(-140%) skewX(-18deg);}
+    .mapbtn:hover::after,.primary-btn:hover::after{animation:sheen .9s ease}
     .mapbtn:hover,.primary-btn:hover{filter:brightness(1.05)}
     .mapbtn:active,.primary-btn:active{transform:scale(.985)}
     .mapbtn svg,.primary-btn svg{width:17px;height:17px;flex:none}
@@ -386,7 +422,7 @@
       margin-top:18px;
       overflow:hidden;
       border-radius:22px;
-      border:1px solid rgba(184,138,53,.25);
+      border:1px solid rgba(119,184,230,.25);
       background:rgba(255,255,255,.58);
     }
     .cal-head{
@@ -395,7 +431,7 @@
       font-weight:700;
       font-size:23px;
       color:var(--jade-dark);
-      background:linear-gradient(135deg,rgba(184,138,53,.10),rgba(31,106,112,.08));
+      background:linear-gradient(135deg,rgba(119,184,230,.10),rgba(31,106,112,.08));
     }
     .dow,.grid{display:grid;grid-template-columns:repeat(7,1fr)}
     .dow div{
@@ -403,8 +439,8 @@
       font-size:12px;
       font-weight:700;
       color:#7d8586;
-      border-top:1px solid rgba(184,138,53,.12);
-      border-bottom:1px solid rgba(184,138,53,.12);
+      border-top:1px solid rgba(119,184,230,.12);
+      border-bottom:1px solid rgba(119,184,230,.12);
       text-transform:uppercase;
     }
     .grid div{
@@ -422,9 +458,9 @@
       position:absolute;
       width:37px;height:37px;
       border-radius:50%;
-      background:linear-gradient(135deg,var(--gold),var(--gold2));
+      background:linear-gradient(135deg,var(--jade-dark),var(--jade));
       z-index:-1;
-      box-shadow:0 8px 18px rgba(184,138,53,.24);
+      box-shadow:0 8px 18px rgba(119,184,230,.24);
     }
 
     .countdown{margin-top:20px}
@@ -481,7 +517,7 @@
       padding:12px 13px;
       border-radius:17px;
       background:rgba(255,255,255,.46);
-      border:1px solid rgba(184,138,53,.18);
+      border:1px solid rgba(119,184,230,.18);
       font-size:15px;
       line-height:1.45;
       color:#475456;
@@ -494,8 +530,8 @@
     .blessing{
       margin-top:18px;
       padding:18px 14px;
-      border-top:1px solid rgba(184,138,53,.22);
-      border-bottom:1px solid rgba(184,138,53,.22);
+      border-top:1px solid rgba(119,184,230,.22);
+      border-bottom:1px solid rgba(119,184,230,.22);
       color:var(--jade-dark);
       font-family:"Noto Serif Display", serif;
       font-size:22px;
@@ -527,21 +563,22 @@
       <div class="inner">
         <div class="hero-photo-wrap">
           <img class="hero-photo" src="./1_photo.jpeg" alt="Дінмұхамед">
-          <div class="photo-badge">1</div>
+          <div class="photo-badge">1 жас</div>
         </div>
 
         <div class="topline">Шақыру билеті</div>
         <h1 class="koss">Қос қуаныш</h1>
         <div class="ornament"><div class="ornament-mark"><span></span></div></div>
 
-        <div class="hero-title">Анамыздың зейнетке шығу тойы</div>
-        <div class="and">және</div>
         <div class="child-name">Дінмұхамед</div>
-        <div class="tusau">Тұсаукесер</div>
+        <div class="topline" style="margin:8px 0 0;color:var(--jade-dark);font-size:11px;letter-spacing:.22em">БІРІНШІ ҚАДАМ • ҚОС ҚУАНЫШ</div>
+        <div class="tusau">Тұсаукесері</div>
+        <div class="and">және</div>
+        <div class="hero-title">Анамыздың зейнетке шығу тойы</div>
 
         <p class="lead">
           Ардақты ағайын-туыс, құда-жекжат, дос-жаран!<br>
-          Сіздерді отбасымыздың қос қуанышына арналған ақ дастарқанымыздың
+          Сіздерді Дінмұхамедтің тұсаукесері мен анамыздың зейнетке шығу тойына арналған ақ дастарқанымыздың
           қадірлі қонағы болуға шақырамыз.
         </p>
         <div class="quote">«Қуаныш бөліссе — көбейеді»</div>
@@ -558,9 +595,9 @@
         <div class="script-title">Құрметті қонақтар!</div>
         <div class="ornament"><div class="ornament-mark"><span></span></div></div>
         <p class="text">
-          Аяулы анамыздың маңдай термен атқарған еңбегінің мерейлі белесі —
-          <span class="em">зейнетке шығу тойын</span> және кішкентай
-          <span class="em">Дінмұхамедтің тұсаукесерін</span> бірге атап өткелі отырмыз.
+          Кішкентай <span class="em">Дінмұхамедтің тұсаукесерін</span>
+          және аяулы анамыздың маңдай термен атқарған еңбегінің мерейлі белесі —
+          <span class="em">зейнетке шығу тойын</span> бірге атап өткелі отырмыз.
           <br><br>
           Осы ерекше күні қуанышымызға ортақтасып, ақ тілегіңіз бен ақ батаңызды
           арнап, төрімізден орын алсаңыздар — біз үшін үлкен мәртебе.
@@ -627,7 +664,7 @@
         <p class="text" style="margin-top:0">Жауабыңызды алдын ала қалдырсаңыз, бізге өте ыңғайлы болады.</p>
 
         <form class="form" id="rsvpForm" method="POST" target="rsvpSink" action="https://script.google.com/macros/s/AKfycbz_K-k_H-rBPox3eEkpVCpv6sC8gB1_nCdm4QFKgapD_JEp-2l0aS0plFK5YWxBKBg/exec">
-          <input type="hidden" name="event" value="Анамыздың зейнетке шығу тойы және Дінмұхамедтің тұсаукесері">
+          <input type="hidden" name="event" value="Дінмұхамедтің тұсаукесері және анамыздың зейнетке шығу тойы">
           <input type="hidden" name="eventDate" value="04.10.2026">
           <input type="hidden" name="venue" value="Kerege, Астана">
           <label class="field-label" for="name">Аты-жөніңіз</label>
