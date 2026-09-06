@@ -79,6 +79,21 @@
       position:relative;
     }
 
+    .page-decor{
+      position:absolute;
+      top:180px;
+      width:110px;
+      opacity:.34;
+      pointer-events:none;
+      user-select:none;
+      filter:drop-shadow(0 10px 22px rgba(79,143,200,.14));
+      animation:float 7s ease-in-out infinite;
+      z-index:0;
+    }
+    .page-decor.left{left:-118px;}
+    .page-decor.right{right:-118px; transform:scaleX(-1); animation-delay:1.2s;}
+
+
     section{margin:16px 0;position:relative;animation:fadeUp .85s ease both}
     section:nth-of-type(2){animation-delay:.08s}
     section:nth-of-type(3){animation-delay:.16s}
@@ -87,6 +102,7 @@
     section:nth-of-type(6){animation-delay:.4s}
 
     .card{
+      z-index:1;
       position:relative;
       overflow:hidden;
       border:1px solid var(--line);
@@ -134,37 +150,22 @@
       text-shadow:0 8px 16px rgba(119,184,230,.14);
       margin-bottom:14px;
     }
-
     .ornament{
       display:flex;
       align-items:center;
       justify-content:center;
-      gap:12px;
       margin:12px auto 18px;
-      color:var(--jade-dark);
-      max-width:360px;
+      max-width:440px;
     }
-    .ornament::before,.ornament::after{
-      content:"";
-      height:1px;
-      flex:1;
-      background:linear-gradient(90deg,transparent,var(--jade-light),transparent);
-    }
-    .ornament-mark{
-      width:34px;height:34px;
-      border:1px solid rgba(119,184,230,.50);
-      transform:rotate(45deg);
-      display:grid;
-      place-items:center;
-      border-radius:5px;
-      background:rgba(255,255,255,.42);
-    }
-    .ornament-mark span{
+    .ornament img{
       display:block;
-      width:14px;height:14px;
-      border:2px solid var(--jade);
-      border-radius:50%;
+      width:min(100%, 340px);
+      height:auto;
+      opacity:.95;
+      filter:drop-shadow(0 8px 16px rgba(79,143,200,.14));
+      animation:float 6s ease-in-out infinite;
     }
+
 
     .hero .inner{padding:34px 22px 38px}
     .hero{box-shadow:var(--shadow)}
@@ -249,6 +250,7 @@
     @keyframes sheen{0%{transform:translateX(-140%) skewX(-18deg)}100%{transform:translateX(240%) skewX(-18deg)}}
 
     .koss{
+      position:relative;
       margin:0;
       font-family:"Noto Serif Display", serif;
       font-size:clamp(18px,4.8vw,24px);
@@ -543,6 +545,10 @@
 
     @media(max-width:420px){
       .page{width:min(94vw,var(--max));padding-top:10px}
+      .page-decor{width:72px;opacity:.2;top:210px}
+      .page-decor.left{left:-54px}
+      .page-decor.right{right:-54px}
+      .ornament img{width:min(100%, 290px)}
       .inner{padding:26px 16px}
       .hero .inner{padding:28px 16px 32px}
       .hero-photo-wrap{width:176px;height:176px;margin-bottom:18px}
@@ -552,39 +558,185 @@
       .number{font-size:27px}
       .detail-main{font-size:27px}
     }
+
+
+    /* Language gate */
+    .language-gate{
+      position:fixed;
+      inset:0;
+      z-index:10000;
+      display:grid;
+      place-items:center;
+      padding:22px;
+      background:
+        radial-gradient(600px 420px at 50% 20%, rgba(191,227,251,.72), transparent 68%),
+        linear-gradient(180deg,#f8fcff,#eaf6ff);
+      transition:opacity .45s ease, visibility .45s ease;
+    }
+    .language-gate.hide{opacity:0;visibility:hidden;pointer-events:none}
+    .language-card{
+      width:min(470px,94vw);
+      position:relative;
+      overflow:hidden;
+      text-align:center;
+      padding:34px 24px 28px;
+      border-radius:34px;
+      border:1px solid rgba(119,184,230,.28);
+      background:rgba(255,255,255,.92);
+      box-shadow:0 26px 70px rgba(79,143,200,.18);
+      backdrop-filter:blur(10px);
+      animation:fadeUp .7s ease both;
+    }
+    .language-card::before,.language-card::after{
+      content:"";
+      position:absolute;
+      width:95px;height:95px;
+      border:2px solid rgba(119,184,230,.25);
+      transform:rotate(45deg);
+    }
+    .language-card::before{left:-38px;top:-38px}
+    .language-card::after{right:-38px;bottom:-38px}
+    .language-ornament{width:min(280px,76vw);height:auto;opacity:.92;margin:0 auto 18px;display:block}
+    .language-title{
+      margin:0;
+      font-family:"Noto Serif Display",serif;
+      font-size:clamp(28px,7vw,38px);
+      color:var(--jade-dark);
+      line-height:1.2;
+    }
+    .language-sub{margin:10px 0 22px;color:#718698;font-size:14px;line-height:1.6}
+    .language-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .language-btn{
+      min-height:54px;
+      border:none;
+      border-radius:18px;
+      cursor:pointer;
+      font:700 15px/1 "Noto Serif",serif;
+      color:#fff;
+      background:linear-gradient(135deg,var(--jade-dark),var(--jade));
+      box-shadow:0 12px 22px rgba(79,143,200,.22);
+      transition:transform .15s ease,filter .15s ease;
+    }
+    .language-btn:hover{filter:brightness(1.04);transform:translateY(-1px)}
+    .language-btn.alt{color:var(--jade-dark);background:#fff;border:1px solid rgba(119,184,230,.32);box-shadow:none}
+
+    /* Music control */
+    .music-fab{
+      position:fixed;
+      right:16px;
+      bottom:16px;
+      z-index:9990;
+      display:none;
+      align-items:center;
+      gap:9px;
+      padding:8px 12px 8px 8px;
+      border-radius:999px;
+      border:1px solid rgba(119,184,230,.25);
+      background:rgba(255,255,255,.90);
+      box-shadow:0 16px 36px rgba(79,143,200,.18);
+      backdrop-filter:blur(8px);
+    }
+    .music-fab.show{display:flex;animation:fadeUp .45s ease both}
+    .music-fab button{
+      width:42px;height:42px;border:0;border-radius:50%;cursor:pointer;
+      display:grid;place-items:center;color:#fff;
+      background:linear-gradient(135deg,var(--jade-dark),var(--jade));
+      box-shadow:0 8px 18px rgba(79,143,200,.22);
+    }
+    .music-fab svg{width:18px;height:18px}
+    .music-fab span{font-size:12px;color:#5e7487;font-weight:700;white-space:nowrap}
+
+    .lang-switch{
+      position:fixed;
+      left:16px;
+      bottom:16px;
+      z-index:9990;
+      display:none;
+      gap:5px;
+      padding:5px;
+      border-radius:999px;
+      background:rgba(255,255,255,.90);
+      border:1px solid rgba(119,184,230,.24);
+      box-shadow:0 12px 28px rgba(79,143,200,.14);
+      backdrop-filter:blur(8px);
+    }
+    .lang-switch.show{display:flex;animation:fadeUp .45s ease both}
+    .lang-switch button{
+      border:0;background:transparent;border-radius:999px;padding:8px 10px;cursor:pointer;
+      font:700 11px/1 "Noto Serif",serif;color:#698195;
+    }
+    .lang-switch button.active{background:rgba(119,184,230,.16);color:var(--jade-dark)}
+
+    @media(max-width:420px){
+      .language-actions{grid-template-columns:1fr}
+      .music-fab span{display:none}
+      .music-fab{padding:7px}
+    }
+
   </style>
 </head>
 <body>
+
+  <audio id="bgm" preload="auto" loop>
+    <source src="./Жазира Байырбекова - Тұсаукесер.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="language-gate" id="languageGate" aria-modal="true" role="dialog">
+    <div class="language-card">
+      <img class="language-ornament" src="./3_photo.png" alt="">
+      <h2 class="language-title">Тілді таңдаңыз</h2>
+      <p class="language-sub">Выберите язык приглашения</p>
+      <div class="language-actions">
+        <button class="language-btn" type="button" data-language="kk">Қазақша</button>
+        <button class="language-btn alt" type="button" data-language="ru">Русский</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="lang-switch" id="langSwitch" aria-label="Language">
+    <button type="button" data-switch-lang="kk">KAZ</button>
+    <button type="button" data-switch-lang="ru">RU</button>
+  </div>
+
+  <div class="music-fab" id="musicFab">
+    <button type="button" id="musicToggle" aria-label="Музыка">
+      <svg id="musicIcon" viewBox="0 0 24 24" fill="none"><path d="M9 7.5v9l8-4.5-8-4.5Z" fill="currentColor"/></svg>
+    </button>
+    <span id="musicLabel">Әуен</span>
+  </div>
+
   <iframe name="rsvpSink" id="rsvpSink" title="RSVP" style="display:none"></iframe>
 
   <main class="page">
+    <img class="page-decor left" src="./2_photo.png" alt="">
+    <img class="page-decor right" src="./2_photo.png" alt="">
 
     <section class="card hero">
       <div class="inner">
         <div class="hero-photo-wrap">
           <img class="hero-photo" src="./1_photo.jpeg" alt="Дінмұхамед">
-          <div class="photo-badge">1 жас</div>
+          <div class="photo-badge" id="photoBadge">1 жас</div>
         </div>
 
-        <div class="topline">Шақыру билеті</div>
-        <h1 class="koss">Қос қуаныш</h1>
-        <div class="ornament"><div class="ornament-mark"><span></span></div></div>
+        <div class="topline" id="inviteTicket">Шақыру билеті</div>
+        <h1 class="koss" id="doubleJoy">Қос қуаныш</h1>
+        <div class="ornament"><img src="./3_photo.png" alt="Қазақы ою"></div>
 
-        <div class="child-name">Дінмұхамед</div>
-        <div class="topline" style="margin:8px 0 0;color:var(--jade-dark);font-size:11px;letter-spacing:.22em">БІРІНШІ ҚАДАМ • ҚОС ҚУАНЫШ</div>
-        <div class="tusau">Тұсаукесері</div>
-        <div class="and">және</div>
-        <div class="hero-title">Анамыздың зейнетке шығу тойы</div>
+        <div class="child-name" id="childName">Дінмұхамед</div>
+        <div class="topline" id="heroKicker" style="margin:8px 0 0;color:var(--jade-dark);font-size:11px;letter-spacing:.22em">БІРІНШІ ҚАДАМ • ҚОС ҚУАНЫШ</div>
+        <div class="tusau" id="tusauTitle">Тұсаукесері</div>
+        <div class="and" id="andText">және</div>
+        <div class="hero-title" id="retirementTitle">Анамыздың зейнетке шығу тойы</div>
 
-        <p class="lead">
+        <p class="lead" id="heroLead">
           Ардақты ағайын-туыс, құда-жекжат, дос-жаран!<br>
           Сіздерді Дінмұхамедтің тұсаукесері мен анамыздың зейнетке шығу тойына арналған ақ дастарқанымыздың
           қадірлі қонағы болуға шақырамыз.
         </p>
-        <div class="quote">«Қуаныш бөліссе — көбейеді»</div>
+        <div class="quote" id="quoteText">«Қуаныш бөліссе — көбейеді»</div>
 
         <button class="scroll-btn" type="button" onclick="document.getElementById('invite').scrollIntoView({behavior:'smooth'})">
-          Төменге жылжытыңыз
+          <span id="scrollText">Төменге жылжытыңыз</span>
           <svg viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
@@ -592,9 +744,9 @@
 
     <section class="card" id="invite">
       <div class="inner">
-        <div class="script-title">Құрметті қонақтар!</div>
-        <div class="ornament"><div class="ornament-mark"><span></span></div></div>
-        <p class="text">
+        <div class="script-title" id="guestsTitle">Құрметті қонақтар!</div>
+        <div class="ornament"><img src="./3_photo.png" alt="Қазақы ою"></div>
+        <p class="text" id="inviteBody">
           Кішкентай <span class="em">Дінмұхамедтің тұсаукесерін</span>
           және аяулы анамыздың маңдай термен атқарған еңбегінің мерейлі белесі —
           <span class="em">зейнетке шығу тойын</span> бірге атап өткелі отырмыз.
@@ -602,7 +754,7 @@
           Осы ерекше күні қуанышымызға ортақтасып, ақ тілегіңіз бен ақ батаңызды
           арнап, төрімізден орын алсаңыздар — біз үшін үлкен мәртебе.
         </p>
-        <div class="blessing">
+        <div class="blessing" id="blessingText">
           Анамыздың абыройы асқақ, ғұмыры ұзақ болсын!<br>
           Дінмұхамедтің қадамы нық, жолы ашық болсын!
         </div>
@@ -611,23 +763,23 @@
 
     <section class="card">
       <div class="inner">
-        <h2 class="section-title">Тойдың жай-жапсары</h2>
-        <div class="ornament"><div class="ornament-mark"><span></span></div></div>
+        <h2 class="section-title" id="detailsTitle">Тойдың жай-жапсары</h2>
+        <div class="ornament"><img src="./3_photo.png" alt="Қазақы ою"></div>
 
         <div class="details">
           <div class="detail">
-            <div class="detail-label">Өтетін күні</div>
-            <div class="detail-main">04 қазан 2026</div>
-            <div class="detail-sub">Жексенбі</div>
+            <div class="detail-label" id="dateLabel">Өтетін күні</div>
+            <div class="detail-main" id="dateText">04 қазан 2026</div>
+            <div class="detail-sub" id="weekdayText">Жексенбі</div>
           </div>
 
           <div class="detail">
-            <div class="detail-label">Өтетін орны</div>
+            <div class="detail-label" id="venueLabel">Өтетін орны</div>
             <div class="detail-main">Kerege</div>
-            <div class="detail-sub">Астана қаласы<br>Қабанбай батыр даңғылы, 19/1</div>
+            <div class="detail-sub" id="venueText">Астана қаласы<br>Қабанбай батыр даңғылы, 19/1</div>
             <a class="mapbtn" href="https://2gis.kz/astana/geo/70000001036720755" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s6-5.1 6-11a6 6 0 1 0-12 0c0 5.9 6 11 6 11Z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10" r="2.3" stroke="currentColor" stroke-width="1.8"/></svg>
-              Картаны ашу
+              <span id="mapText">Картаны ашу</span>
             </a>
           </div>
         </div>
@@ -636,22 +788,22 @@
 
     <section class="card">
       <div class="inner">
-        <div class="script-title">Мерейлі күн</div>
+        <div class="script-title" id="calendarTitle">Мерейлі күн</div>
         <div class="calendar" aria-label="2026 жылғы қазан айының күнтізбесі">
-          <div class="cal-head">Қазан 2026</div>
+          <div class="cal-head" id="calendarMonth">Қазан 2026</div>
           <div class="dow">
-            <div>дс</div><div>сс</div><div>ср</div><div>бс</div><div>жм</div><div>сб</div><div>жс</div>
+            <div id="dow0">дс</div><div id="dow1">сс</div><div id="dow2">ср</div><div id="dow3">бс</div><div id="dow4">жм</div><div id="dow5">сб</div><div id="dow6">жс</div>
           </div>
           <div class="grid" id="calendarGrid"></div>
         </div>
 
         <div class="countdown">
-          <p class="count-title">Мерекелік күнге дейін</p>
+          <p class="count-title" id="countTitle">Мерекелік күнге дейін</p>
           <div class="digits">
-            <div class="unit"><div class="number" id="dDays">00</div><div class="lab">күн</div></div>
-            <div class="unit"><div class="number" id="dHours">00</div><div class="lab">сағат</div></div>
-            <div class="unit"><div class="number" id="dMins">00</div><div class="lab">минут</div></div>
-            <div class="unit"><div class="number" id="dSecs">00</div><div class="lab">секунд</div></div>
+            <div class="unit"><div class="number" id="dDays">00</div><div class="lab" id="labDays">күн</div></div>
+            <div class="unit"><div class="number" id="dHours">00</div><div class="lab" id="labHours">сағат</div></div>
+            <div class="unit"><div class="number" id="dMins">00</div><div class="lab" id="labMins">минут</div></div>
+            <div class="unit"><div class="number" id="dSecs">00</div><div class="lab" id="labSecs">секунд</div></div>
           </div>
         </div>
       </div>
@@ -659,34 +811,34 @@
 
     <section class="card" id="rsvp">
       <div class="inner">
-        <div class="script-title">Қатысуыңызды растаңыз</div>
-        <div class="ornament"><div class="ornament-mark"><span></span></div></div>
-        <p class="text" style="margin-top:0">Жауабыңызды алдын ала қалдырсаңыз, бізге өте ыңғайлы болады.</p>
+        <div class="script-title" id="rsvpTitle">Қатысуыңызды растаңыз</div>
+        <div class="ornament"><img src="./3_photo.png" alt="Қазақы ою"></div>
+        <p class="text" id="rsvpIntro" style="margin-top:0">Жауабыңызды алдын ала қалдырсаңыз, бізге өте ыңғайлы болады.</p>
 
         <form class="form" id="rsvpForm" method="POST" target="rsvpSink" action="https://script.google.com/macros/s/AKfycbz_K-k_H-rBPox3eEkpVCpv6sC8gB1_nCdm4QFKgapD_JEp-2l0aS0plFK5YWxBKBg/exec">
           <input type="hidden" name="event" value="Дінмұхамедтің тұсаукесері және анамыздың зейнетке шығу тойы">
           <input type="hidden" name="eventDate" value="04.10.2026">
           <input type="hidden" name="venue" value="Kerege, Астана">
-          <label class="field-label" for="name">Аты-жөніңіз</label>
+          <label class="field-label" for="name" id="nameLabel">Аты-жөніңіз</label>
           <input class="input" name="name" id="name" type="text" placeholder="Мысалы: Айбек Нұрланұлы" autocomplete="name" required>
 
-          <label class="field-label">Тойға қатысасыз ба?</label>
+          <label class="field-label" id="attendanceLabel">Тойға қатысасыз ба?</label>
           <div class="radio-list">
             <label class="radio">
               <input type="radio" name="attendance" value="Міндетті түрде келемін" required>
-              <span>Міндетті түрде келемін</span>
+              <span id="attendanceYesText">Міндетті түрде келемін</span>
             </label>
             <label class="radio">
               <input type="radio" name="attendance" value="Жұбыммен / отбасыммен келемін">
-              <span>Жұбыммен / отбасыммен келемін</span>
+              <span id="attendanceFamilyText">Жұбыммен / отбасыммен келемін</span>
             </label>
             <label class="radio">
               <input type="radio" name="attendance" value="Өкінішке қарай, қатыса алмаймын">
-              <span>Өкінішке қарай, қатыса алмаймын</span>
+              <span id="attendanceNoText">Өкінішке қарай, қатыса алмаймын</span>
             </label>
           </div>
 
-          <label class="field-label" for="guestCount">Неше адам болып келесіз?</label>
+          <label class="field-label" for="guestCount" id="guestCountLabel">Неше адам болып келесіз?</label>
           <select class="input" name="guestCount" id="guestCount" required>
             <option value="1">1 адам</option>
             <option value="2">2 адам</option>
@@ -701,12 +853,12 @@
           </select>
           <div class="form-hint" id="guestHint">Өзіңізді қосқанда жалпы адам санын көрсетіңіз.</div>
 
-          <label class="field-label" for="comment">Тілек немесе ескерту <span style="font-weight:400">(міндетті емес)</span></label>
+          <label class="field-label" for="comment" id="commentLabel">Тілек немесе ескерту <span style="font-weight:400">(міндетті емес)</span></label>
           <textarea class="input" name="comment" id="comment" maxlength="300" placeholder="Қаласаңыз, қысқаша тілек немесе ескерту қалдырыңыз"></textarea>
 
           <button class="primary-btn" id="submitBtn" type="submit">
             <svg viewBox="0 0 24 24" fill="none"><path d="M21 3 10.5 13.5M21 3l-6.8 18-3.7-7.5L3 9.8 21 3Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Жауапты жіберу
+            <span id="submitText">Жауапты жіберу</span>
           </button>
           <div class="status" id="status" aria-live="polite"></div>
         </form>
@@ -715,131 +867,212 @@
 
     <section class="card">
       <div class="inner">
-        <div class="script-title">Ақ тілекпен күтеміз!</div>
-        <div class="ornament"><div class="ornament-mark"><span></span></div></div>
-        <p class="text" style="margin-top:0">
+        <div class="script-title" id="footerTitle">Ақ тілекпен күтеміз!</div>
+        <div class="ornament"><img src="./3_photo.png" alt="Қазақы ою"></div>
+        <p class="text" id="footerBody" style="margin-top:0">
           Қуанышымызға ортақтасып, ақ дастарқанымыздың сәнін келтіріңіздер.
           Сіздердің жылы лебіздеріңіз бен ақ баталарыңыз — біз үшін ең қымбат сый.
         </p>
-        <div class="footer-note">Кездескенше, қадірлі қонақтар!</div>
+        <div class="footer-note" id="footerNote">Кездескенше, қадірлі қонақтар!</div>
       </div>
     </section>
 
   </main>
 
   <script>
-    // ---- Күнтізбе ----
+    const translations = {
+      kk: {
+        title: 'Дінмұхамед — тұсаукесері және анамыздың зейнетке шығу тойы',
+        photoBadge:'1 жас', inviteTicket:'Шақыру билеті', doubleJoy:'Қос қуаныш', heroKicker:'БІРІНШІ ҚАДАМ • ҚОС ҚУАНЫШ',
+        tusauTitle:'Тұсаукесері', andText:'және', retirementTitle:'Анамыздың зейнетке шығу тойы',
+        heroLead:'Ардақты ағайын-туыс, құда-жекжат, дос-жаран!<br>Сіздерді Дінмұхамедтің тұсаукесері мен анамыздың зейнетке шығу тойына арналған ақ дастарқанымыздың қадірлі қонағы болуға шақырамыз.',
+        quoteText:'«Қуаныш бөліссе — көбейеді»', scrollText:'Төменге жылжытыңыз', guestsTitle:'Құрметті қонақтар!',
+        inviteBody:'Кішкентай <span class="em">Дінмұхамедтің тұсаукесерін</span> және аяулы анамыздың маңдай термен атқарған еңбегінің мерейлі белесі — <span class="em">зейнетке шығу тойын</span> бірге атап өткелі отырмыз.<br><br>Осы ерекше күні қуанышымызға ортақтасып, ақ тілегіңіз бен ақ батаңызды арнап, төрімізден орын алсаңыздар — біз үшін үлкен мәртебе.',
+        blessingText:'Анамыздың абыройы асқақ, ғұмыры ұзақ болсын!<br>Дінмұхамедтің қадамы нық, жолы ашық болсын!',
+        detailsTitle:'Тойдың жай-жапсары', dateLabel:'Өтетін күні', dateText:'04 қазан 2026', weekdayText:'Жексенбі',
+        venueLabel:'Өтетін орны', venueText:'Астана қаласы<br>Қабанбай батыр даңғылы, 19/1', mapText:'Картаны ашу',
+        calendarTitle:'Мерейлі күн', calendarMonth:'Қазан 2026', dow:['дс','сс','ср','бс','жм','сб','жс'],
+        countTitle:'Мерекелік күнге дейін', labs:['күн','сағат','минут','секунд'],
+        rsvpTitle:'Қатысуыңызды растаңыз', rsvpIntro:'Жауабыңызды алдын ала қалдырсаңыз, бізге өте ыңғайлы болады.',
+        nameLabel:'Аты-жөніңіз', namePlaceholder:'Мысалы: Айбек Нұрланұлы', attendanceLabel:'Тойға қатысасыз ба?',
+        attendanceYes:'Міндетті түрде келемін', attendanceFamily:'Жұбыммен / отбасыммен келемін', attendanceNo:'Өкінішке қарай, қатыса алмаймын',
+        guestCountLabel:'Неше адам болып келесіз?', guestWord:'адам', guestHint:'Өзіңізді қосқанда жалпы адам санын көрсетіңіз.', declineHint:'Қатыса алмайтыныңыз белгіленді — кестеде адам саны 0 болып сақталады.',
+        commentLabel:'Тілек немесе ескерту <span style="font-weight:400">(міндетті емес)</span>', commentPlaceholder:'Қаласаңыз, қысқаша тілек немесе ескерту қалдырыңыз',
+        submitText:'Жауапты жіберу', validation:'Аты-жөніңізді және қатысу мәртебесін толтырыңыз.', sending:'Жіберіліп жатыр…', success:'Рақмет! Жауабыңыз жіберілді ✓',
+        footerTitle:'Ақ тілекпен күтеміз!', footerBody:'Қуанышымызға ортақтасып, ақ дастарқанымыздың сәнін келтіріңіздер. Сіздердің жылы лебіздеріңіз бен ақ баталарыңыз — біз үшін ең қымбат сый.', footerNote:'Кездескенше, қадірлі қонақтар!',
+        music:'Әуен', musicOn:'Әуен: қосулы', musicOff:'Әуен: өшірулі'
+      },
+      ru: {
+        title:'Дінмұхамед — тұсаукесер и праздник выхода мамы на заслуженный отдых',
+        photoBadge:'1 год', inviteTicket:'Приглашение', doubleJoy:'Двойная радость', heroKicker:'ПЕРВЫЕ ШАГИ • ДВОЙНАЯ РАДОСТЬ',
+        tusauTitle:'Тұсаукесер', andText:'и', retirementTitle:'Праздник выхода нашей мамы на заслуженный отдых',
+        heroLead:'Дорогие родные, близкие и друзья!<br>Приглашаем вас стать почётными гостями нашего праздничного дастархана, посвящённого тұсаукесеру Дінмұхамеда и выходу нашей мамы на заслуженный отдых.',
+        quoteText:'«Радость, которой делятся, становится больше»', scrollText:'Листать ниже', guestsTitle:'Дорогие гости!',
+        inviteBody:'Мы хотим вместе отметить <span class="em">тұсаукесер маленького Дінмұхамеда</span> и важный этап многолетнего труда нашей дорогой мамы — <span class="em">выход на заслуженный отдых</span>.<br><br>В этот особенный день будем рады разделить с вами нашу радость, услышать ваши добрые пожелания и благословения и видеть вас за нашим дастарханом.',
+        blessingText:'Пусть наша мама будет окружена почётом, здоровьем и долгими годами жизни!<br>Пусть шаги Дінмұхамеда будут уверенными, а дорога — светлой и открытой!',
+        detailsTitle:'О торжестве', dateLabel:'Дата', dateText:'04 октября 2026', weekdayText:'Воскресенье',
+        venueLabel:'Место проведения', venueText:'г. Астана<br>проспект Кабанбай батыра, 19/1', mapText:'Открыть карту',
+        calendarTitle:'Особенный день', calendarMonth:'Октябрь 2026', dow:['пн','вт','ср','чт','пт','сб','вс'],
+        countTitle:'До торжества', labs:['дней','часов','минут','секунд'],
+        rsvpTitle:'Подтвердите участие', rsvpIntro:'Пожалуйста, оставьте ответ заранее — это поможет нам всё подготовить.',
+        nameLabel:'Ваше имя', namePlaceholder:'Например: Айбек Нурланулы', attendanceLabel:'Вы будете на празднике?',
+        attendanceYes:'Обязательно приду', attendanceFamily:'Приду с парой / семьёй', attendanceNo:'К сожалению, не смогу присутствовать',
+        guestCountLabel:'Сколько вас будет?', guestWord:'чел.', guestHint:'Укажите общее количество гостей, включая себя.', declineHint:'Вы отметили, что не сможете прийти — в таблице количество гостей сохранится как 0.',
+        commentLabel:'Пожелание или примечание <span style="font-weight:400">(необязательно)</span>', commentPlaceholder:'При желании оставьте короткое пожелание или примечание',
+        submitText:'Отправить ответ', validation:'Укажите имя и выберите вариант участия.', sending:'Отправляем…', success:'Спасибо! Ваш ответ отправлен ✓',
+        footerTitle:'Будем рады вас видеть!', footerBody:'Разделите с нами этот светлый день и украсьте своим присутствием наш праздничный дастархан. Ваши тёплые слова и добрые пожелания — самый дорогой подарок для нас.', footerNote:'До встречи, дорогие гости!',
+        music:'Музыка', musicOn:'Музыка: вкл', musicOff:'Музыка: выкл'
+      }
+    };
+
+    let currentLang = 'kk';
+    const bgm = document.getElementById('bgm');
+    const languageGate = document.getElementById('languageGate');
+    const langSwitch = document.getElementById('langSwitch');
+    const musicFab = document.getElementById('musicFab');
+    const musicToggle = document.getElementById('musicToggle');
+    const musicIcon = document.getElementById('musicIcon');
+    const musicLabel = document.getElementById('musicLabel');
+
+    function setText(id, value, htmlMode=false){
+      const el = document.getElementById(id);
+      if(!el) return;
+      if(htmlMode) el.innerHTML = value; else el.textContent = value;
+    }
+
+    function setLanguage(lang){
+      currentLang = lang;
+      const t = translations[lang];
+      document.documentElement.lang = lang;
+      document.title = t.title;
+      ['photoBadge','inviteTicket','doubleJoy','heroKicker','tusauTitle','andText','retirementTitle','quoteText','scrollText','guestsTitle','detailsTitle','dateLabel','dateText','weekdayText','venueLabel','mapText','calendarTitle','calendarMonth','countTitle','rsvpTitle','rsvpIntro','nameLabel','attendanceLabel','attendanceYesText','attendanceFamilyText','attendanceNoText','guestCountLabel','submitText','footerTitle','footerNote'].forEach(id=>{
+        const map = {attendanceYesText:'attendanceYes',attendanceFamilyText:'attendanceFamily',attendanceNoText:'attendanceNo'};
+        setText(id, t[map[id] || id]);
+      });
+      setText('heroLead', t.heroLead, true);
+      setText('inviteBody', t.inviteBody, true);
+      setText('blessingText', t.blessingText, true);
+      setText('venueText', t.venueText, true);
+      setText('commentLabel', t.commentLabel, true);
+      setText('footerBody', t.footerBody, true);
+      for(let i=0;i<7;i++) setText('dow'+i,t.dow[i]);
+      ['labDays','labHours','labMins','labSecs'].forEach((id,i)=>setText(id,t.labs[i]));
+      document.getElementById('name').placeholder = t.namePlaceholder;
+      document.getElementById('comment').placeholder = t.commentPlaceholder;
+      const guestSelect = document.getElementById('guestCount');
+      [...guestSelect.options].forEach(opt => opt.textContent = `${opt.value} ${t.guestWord}`);
+      updateGuestHint();
+      updateMusicUI();
+      document.querySelectorAll('[data-switch-lang]').forEach(btn=>btn.classList.toggle('active',btn.dataset.switchLang===lang));
+    }
+
+    async function enterSite(lang){
+      setLanguage(lang);
+      languageGate.classList.add('hide');
+      document.body.style.overflow = '';
+      langSwitch.classList.add('show');
+      musicFab.classList.add('show');
+      try{ await bgm.play(); }catch(e){}
+      updateMusicUI();
+    }
+
+    document.body.style.overflow = 'hidden';
+    document.querySelectorAll('[data-language]').forEach(btn=>btn.addEventListener('click',()=>enterSite(btn.dataset.language)));
+    document.querySelectorAll('[data-switch-lang]').forEach(btn=>btn.addEventListener('click',()=>setLanguage(btn.dataset.switchLang)));
+
+    function updateMusicUI(){
+      const t = translations[currentLang];
+      const playing = !bgm.paused;
+      musicIcon.innerHTML = playing
+        ? '<path d="M7 6.5h3.2v11H7v-11Zm6.8 0H17v11h-3.2v-11Z" fill="currentColor"/>'
+        : '<path d="M9 7.5v9l8-4.5-8-4.5Z" fill="currentColor"/>';
+      musicLabel.textContent = playing ? t.musicOn : t.musicOff;
+    }
+
+    musicToggle.addEventListener('click', async()=>{
+      if(bgm.paused){ try{ await bgm.play(); }catch(e){} } else { bgm.pause(); }
+      updateMusicUI();
+    });
+    bgm.addEventListener('play',updateMusicUI);
+    bgm.addEventListener('pause',updateMusicUI);
+
+    // Calendar
     (function buildCalendar(){
       const grid = document.getElementById('calendarGrid');
-      const year = 2026;
-      const monthIndex = 9; // Қазан
-      const selectedDay = 4;
-
-      const first = new Date(year, monthIndex, 1);
-      const last = new Date(year, monthIndex + 1, 0);
+      const year = 2026, monthIndex = 9, selectedDay = 4;
+      const first = new Date(year,monthIndex,1);
+      const last = new Date(year,monthIndex+1,0);
       const daysInMonth = last.getDate();
-      const mondayFirst = (first.getDay() + 6) % 7;
-      const cells = Math.ceil((mondayFirst + daysInMonth) / 7) * 7;
-
-      for(let i = 0; i < cells; i++){
-        const dayNum = i - mondayFirst + 1;
-        const cell = document.createElement('div');
-        if(dayNum < 1 || dayNum > daysInMonth){
-          cell.className = 'empty';
-          cell.textContent = '·';
-        }else{
-          cell.textContent = dayNum;
-          if(dayNum === selectedDay) cell.classList.add('selected');
-        }
+      const mondayFirst = (first.getDay()+6)%7;
+      const cells = Math.ceil((mondayFirst+daysInMonth)/7)*7;
+      for(let i=0;i<cells;i++){
+        const dayNum=i-mondayFirst+1;
+        const cell=document.createElement('div');
+        if(dayNum<1||dayNum>daysInMonth){cell.className='empty';cell.textContent='·';}
+        else{cell.textContent=dayNum;if(dayNum===selectedDay)cell.classList.add('selected');}
         grid.appendChild(cell);
       }
     })();
 
-    // ---- Кері санау ----
-    // Нақты басталу уақыты берілмегендіктен, санау 04.10.2026 күнінің басталуына дейін жүреді.
+    // Countdown
     const target = new Date('2026-10-04T00:00:00+05:00');
-    const pad2 = n => String(n).padStart(2,'0');
-
+    const pad2=n=>String(n).padStart(2,'0');
     function tick(){
-      let diff = target - new Date();
-      if(diff < 0) diff = 0;
-
-      const sec = Math.floor(diff / 1000);
-      const days = Math.floor(sec / 86400);
-      const hours = Math.floor((sec % 86400) / 3600);
-      const mins = Math.floor((sec % 3600) / 60);
-      const secs = sec % 60;
-
-      document.getElementById('dDays').textContent = pad2(days);
-      document.getElementById('dHours').textContent = pad2(hours);
-      document.getElementById('dMins').textContent = pad2(mins);
-      document.getElementById('dSecs').textContent = pad2(secs);
+      let diff=target-new Date(); if(diff<0)diff=0;
+      const sec=Math.floor(diff/1000);
+      document.getElementById('dDays').textContent=pad2(Math.floor(sec/86400));
+      document.getElementById('dHours').textContent=pad2(Math.floor((sec%86400)/3600));
+      document.getElementById('dMins').textContent=pad2(Math.floor((sec%3600)/60));
+      document.getElementById('dSecs').textContent=pad2(sec%60);
     }
-    tick();
-    setInterval(tick,1000);
+    tick(); setInterval(tick,1000);
 
-    // ---- RSVP / Google Sheets ----
-    // The form is sent as a normal POST into a hidden iframe.
-    // This avoids CORS problems between GitHub Pages and Google Apps Script.
-    const form = document.getElementById('rsvpForm');
-    const statusEl = document.getElementById('status');
-    const submitBtn = document.getElementById('submitBtn');
-    const guestCountEl = document.getElementById('guestCount');
-    const guestHintEl = document.getElementById('guestHint');
-    const rsvpSink = document.getElementById('rsvpSink');
-    let rsvpSubmitted = false;
+    // RSVP / Google Sheets
+    const form=document.getElementById('rsvpForm');
+    const statusEl=document.getElementById('status');
+    const submitBtn=document.getElementById('submitBtn');
+    const guestCountEl=document.getElementById('guestCount');
+    const guestHintEl=document.getElementById('guestHint');
+    const rsvpSink=document.getElementById('rsvpSink');
+    let rsvpSubmitted=false;
 
-    document.querySelectorAll('input[name="attendance"]').forEach((radio) => {
-      radio.addEventListener('change', () => {
-        if(!radio.checked) return;
+    function selectedAttendance(){ return document.querySelector('input[name="attendance"]:checked')?.value || ''; }
+    function updateGuestHint(){
+      const t=translations[currentLang];
+      if(selectedAttendance()==='Өкінішке қарай, қатыса алмаймын') guestHintEl.textContent=t.declineHint;
+      else guestHintEl.textContent=t.guestHint;
+    }
 
-        if(radio.value === 'Өкінішке қарай, қатыса алмаймын'){
-          guestCountEl.value = '1';
-          guestCountEl.disabled = true;
-          guestCountEl.required = false;
-          guestHintEl.textContent = 'Қатыса алмайтыныңыз белгіленді — кестеде адам саны 0 болып сақталады.';
+    document.querySelectorAll('input[name="attendance"]').forEach(radio=>{
+      radio.addEventListener('change',()=>{
+        if(!radio.checked)return;
+        if(radio.value==='Өкінішке қарай, қатыса алмаймын'){
+          guestCountEl.value='1'; guestCountEl.disabled=true; guestCountEl.required=false;
         }else{
-          guestCountEl.disabled = false;
-          guestCountEl.required = true;
-          if(radio.value.includes('Жұбыммен') && Number(guestCountEl.value) < 2){
-            guestCountEl.value = '2';
-          }
-          guestHintEl.textContent = 'Өзіңізді қосқанда жалпы адам санын көрсетіңіз.';
+          guestCountEl.disabled=false; guestCountEl.required=true;
+          if(radio.value.includes('Жұбыммен') && Number(guestCountEl.value)<2) guestCountEl.value='2';
         }
+        updateGuestHint();
       });
     });
 
-    form.addEventListener('submit', (e) => {
-      const attendance = new FormData(form).get('attendance');
-      const name = document.getElementById('name').value.trim();
-
-      if(!name || !attendance){
-        e.preventDefault();
-        statusEl.textContent = 'Аты-жөніңізді және қатысу мәртебесін толтырыңыз.';
-        return;
-      }
-
-      // Disabled controls are not sent by a native form submit.
-      // For a decline, the backend intentionally treats a missing guestCount as 0.
-      rsvpSubmitted = true;
-      submitBtn.disabled = true;
-      submitBtn.style.opacity = '.65';
-      statusEl.textContent = 'Жіберіліп жатыр…';
+    form.addEventListener('submit',e=>{
+      const t=translations[currentLang];
+      const attendance=new FormData(form).get('attendance');
+      const name=document.getElementById('name').value.trim();
+      if(!name||!attendance){e.preventDefault();statusEl.textContent=t.validation;return;}
+      rsvpSubmitted=true; submitBtn.disabled=true; submitBtn.style.opacity='.65'; statusEl.textContent=t.sending;
     });
 
-    rsvpSink.addEventListener('load', () => {
-      if(!rsvpSubmitted) return;
-      rsvpSubmitted = false;
-
-      statusEl.textContent = 'Рақмет! Жауабыңыз жіберілді ✓';
-      form.reset();
-      guestCountEl.disabled = false;
-      guestCountEl.required = true;
-      guestCountEl.value = '1';
-      guestHintEl.textContent = 'Өзіңізді қосқанда жалпы адам санын көрсетіңіз.';
-      submitBtn.disabled = false;
-      submitBtn.style.opacity = '1';
+    rsvpSink.addEventListener('load',()=>{
+      if(!rsvpSubmitted)return;
+      rsvpSubmitted=false;
+      statusEl.textContent=translations[currentLang].success;
+      form.reset(); guestCountEl.disabled=false; guestCountEl.required=true; guestCountEl.value='1';
+      updateGuestHint(); submitBtn.disabled=false; submitBtn.style.opacity='1';
     });
+
+    setLanguage('kk');
   </script>
 </body>
 </html>
