@@ -519,6 +519,8 @@
   </style>
 </head>
 <body>
+  <iframe name="rsvpSink" id="rsvpSink" title="RSVP" style="display:none"></iframe>
+
   <main class="page">
 
     <section class="card hero">
@@ -624,7 +626,10 @@
         <div class="ornament"><div class="ornament-mark"><span></span></div></div>
         <p class="text" style="margin-top:0">Жауабыңызды алдын ала қалдырсаңыз, бізге өте ыңғайлы болады.</p>
 
-        <form class="form" id="rsvpForm">
+        <form class="form" id="rsvpForm" method="POST" target="rsvpSink" action="https://script.google.com/macros/s/AKfycbz_K-k_H-rBPox3eEkpVCpv6sC8gB1_nCdm4QFKgapD_JEp-2l0aS0plFK5YWxBKBg/exec">
+          <input type="hidden" name="event" value="Анамыздың зейнетке шығу тойы және Дінмұхамедтің тұсаукесері">
+          <input type="hidden" name="eventDate" value="04.10.2026">
+          <input type="hidden" name="venue" value="Kerege, Астана">
           <label class="field-label" for="name">Аты-жөніңіз</label>
           <input class="input" name="name" id="name" type="text" placeholder="Мысалы: Айбек Нұрланұлы" autocomplete="name" required>
 
@@ -737,38 +742,29 @@
     setInterval(tick,1000);
 
     // ---- RSVP / Google Sheets ----
-    // 1) Google Sheets ішінде Apps Script ашыңыз.
-    // 2) Берілген Code.gs кодын салыңыз және Web App ретінде жариялаңыз.
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyDZt9hTc1T8KIA42kdY3hwJGSuc8Z0S4ca-xCzRLnftPa86bfyAwcWvHzVEOCs5mM/exec';
-
+    // The form is sent as a normal POST into a hidden iframe.
+    // This avoids CORS problems between GitHub Pages and Google Apps Script.
     const form = document.getElementById('rsvpForm');
     const statusEl = document.getElementById('status');
     const submitBtn = document.getElementById('submitBtn');
     const guestCountEl = document.getElementById('guestCount');
     const guestHintEl = document.getElementById('guestHint');
-
-    // Бір браузерден келген жауаптарды техникалық түрде ажырату үшін ID.
-    let clientId = localStorage.getItem('dinmuhamed_rsvp_client_id');
-    if(!clientId){
-      clientId = (window.crypto && crypto.randomUUID)
-        ? crypto.randomUUID()
-        : 'guest-' + Date.now() + '-' + Math.random().toString(16).slice(2);
-      localStorage.setItem('dinmuhamed_rsvp_client_id', clientId);
-    }
+    const rsvpSink = document.getElementById('rsvpSink');
+    let rsvpSubmitted = false;
 
     document.querySelectorAll('input[name="attendance"]').forEach((radio) => {
       radio.addEventListener('change', () => {
-        if(radio.value === 'Өкінішке қарай, қатыса алмаймын' && radio.checked){
-          guestCountEl.value = '0';
+        if(!radio.checked) return;
+
+        if(radio.value === 'Өкінішке қарай, қатыса алмаймын'){
+          guestCountEl.value = '1';
           guestCountEl.disabled = true;
           guestCountEl.required = false;
-          guestHintEl.textContent = 'Қатыса алмайтыныңыз белгіленді — адам саны 0 болып сақталады.';
-        } else if(radio.checked){
+          guestHintEl.textContent = 'Қатыса алмайтыныңыз белгіленді — кестеде адам саны 0 болып сақталады.';
+        }else{
           guestCountEl.disabled = false;
           guestCountEl.required = true;
-          if(guestCountEl.value === '0' || !guestCountEl.value){
-            guestCountEl.value = radio.value.includes('Жұбыммен') ? '2' : '1';
-          } else if(radio.value.includes('Жұбыммен') && Number(guestCountEl.value) < 2){
+          if(radio.value.includes('Жұбыммен') && Number(guestCountEl.value) < 2){
             guestCountEl.value = '2';
           }
           guestHintEl.textContent = 'Өзіңізді қосқанда жалпы адам санын көрсетіңіз.';
@@ -776,66 +772,36 @@
       });
     });
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
+    form.addEventListener('submit', (e) => {
       const attendance = new FormData(form).get('attendance');
       const name = document.getElementById('name').value.trim();
-      const comment = document.getElementById('comment').value.trim();
-      const guestCount = attendance === 'Өкінішке қарай, қатыса алмаймын'
-        ? 0
-        : Number(guestCountEl.value || 1);
 
       if(!name || !attendance){
+        e.preventDefault();
         statusEl.textContent = 'Аты-жөніңізді және қатысу мәртебесін толтырыңыз.';
         return;
       }
 
-      if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes('PASTE_YOUR_')){
-        statusEl.textContent = 'Google Apps Script сілтемесі әлі орнатылмаған.';
-        return;
-      }
-
-      const payload = {
-        name,
-        attendance,
-        guestCount: String(guestCount),
-        comment,
-        event: 'Анамыздың зейнетке шығу тойы және Дінмұхамедтің тұсаукесері',
-        eventDate: '04.10.2026',
-        venue: 'Kerege, Астана',
-        page: location.href,
-        clientId,
-        browserTime: new Date().toISOString()
-      };
-
+      // Disabled controls are not sent by a native form submit.
+      // For a decline, the backend intentionally treats a missing guestCount as 0.
+      rsvpSubmitted = true;
       submitBtn.disabled = true;
       submitBtn.style.opacity = '.65';
       statusEl.textContent = 'Жіберіліп жатыр…';
+    });
 
-      try{
-        // URLSearchParams Google Apps Script үшін сенімді жұмыс істейді
-        // және GitHub Pages-тен CORS preflight талап етпейді.
-        const body = new URLSearchParams(payload);
-        await fetch(APPS_SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          body
-        });
+    rsvpSink.addEventListener('load', () => {
+      if(!rsvpSubmitted) return;
+      rsvpSubmitted = false;
 
-        statusEl.textContent = 'Рақмет! Жауабыңыз қабылданды ✓';
-        form.reset();
-        guestCountEl.disabled = false;
-        guestCountEl.required = true;
-        guestCountEl.value = '1';
-        guestHintEl.textContent = 'Өзіңізді қосқанда жалпы адам санын көрсетіңіз.';
-      }catch(err){
-        console.error(err);
-        statusEl.textContent = 'Жауапты жіберу мүмкін болмады. Кейінірек қайталап көріңіз.';
-      }finally{
-        submitBtn.disabled = false;
-        submitBtn.style.opacity = '1';
-      }
+      statusEl.textContent = 'Рақмет! Жауабыңыз жіберілді ✓';
+      form.reset();
+      guestCountEl.disabled = false;
+      guestCountEl.required = true;
+      guestCountEl.value = '1';
+      guestHintEl.textContent = 'Өзіңізді қосқанда жалпы адам санын көрсетіңіз.';
+      submitBtn.disabled = false;
+      submitBtn.style.opacity = '1';
     });
   </script>
 </body>
