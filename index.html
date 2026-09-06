@@ -385,6 +385,11 @@
     }
     .detail-sub{margin-top:7px;color:#566466;line-height:1.7;font-size:15px}
 
+    .dress-code-detail{
+      background:linear-gradient(135deg,rgba(255,255,255,.66),rgba(248,241,225,.72));
+    }
+    .dress-code-detail .detail-main{font-size:26px}
+
     .mapbtn,.primary-btn{
       display:inline-flex;
       align-items:center;
@@ -1266,6 +1271,12 @@
               <span id="mapText">Картаны ашу</span>
             </a>
           </div>
+
+          <div class="detail dress-code-detail">
+            <div class="detail-label" id="dressCodeLabel">Киім үлгісі</div>
+            <div class="detail-main" id="dressCodeTitle">Қазақы ұлттық нақыш</div>
+            <div class="detail-sub" id="dressCodeText">Ұлттық киім немесе қазақы ою-өрнегі бар мерекелік образ</div>
+          </div>
         </div>
       </div>
     </section>
@@ -1374,7 +1385,7 @@
         inviteBody:'Кішкентай <span class="em">Дінмұхамедтің тұсаукесерін</span> және аяулы анамыздың маңдай термен атқарған еңбегінің мерейлі белесі — <span class="em">зейнетке шығу тойын</span> бірге атап өткелі отырмыз.<br><br>Осы ерекше күні қуанышымызға ортақтасып, ақ тілегіңіз бен ақ батаңызды арнап, төрімізден орын алсаңыздар — біз үшін үлкен мәртебе.',
         blessingText:'Анамыздың абыройы асқақ, ғұмыры ұзақ болсын!<br>Дінмұхамедтің қадамы нық, жолы ашық болсын!',
         detailsTitle:'Тойдың жай-жапсары', dateLabel:'Өтетін күні', dateText:'04 қазан 2026', weekdayText:'Жексенбі',
-        venueLabel:'Өтетін орны', venueText:'Астана қаласы<br>Қабанбай батыр даңғылы, 19/1', mapText:'Картаны ашу',
+        venueLabel:'Өтетін орны', venueText:'Астана қаласы<br>Қабанбай батыр даңғылы, 19/1', mapText:'Картаны ашу', dressCodeLabel:'Киім үлгісі', dressCodeTitle:'Қазақы ұлттық нақыш', dressCodeText:'Ұлттық киім немесе қазақы ою-өрнегі бар мерекелік образ',
         calendarTitle:'Мерейлі күн', calendarMonth:'Қазан 2026', dow:['дс','сс','ср','бс','жм','сб','жс'],
         countTitle:'Мерекелік күнге дейін', labs:['күн','сағат','минут','секунд'],
         rsvpTitle:'Қатысуыңызды растаңыз', rsvpIntro:'Жауабыңызды алдын ала қалдырсаңыз, бізге өте ыңғайлы болады.',
@@ -1395,7 +1406,7 @@
         inviteBody:'Мы хотим вместе отметить <span class="em">тұсаукесер маленького Дінмұхамеда</span> и важный этап многолетнего труда нашей дорогой мамы — <span class="em">выход на заслуженный отдых</span>.<br><br>В этот особенный день будем рады разделить с вами нашу радость, услышать ваши добрые пожелания и благословения и видеть вас за нашим дастарханом.',
         blessingText:'Пусть наша мама будет окружена почётом, здоровьем и долгими годами жизни!<br>Пусть шаги Дінмұхамеда будут уверенными, а дорога — светлой и открытой!',
         detailsTitle:'О торжестве', dateLabel:'Дата', dateText:'04 октября 2026', weekdayText:'Воскресенье',
-        venueLabel:'Место проведения', venueText:'г. Астана<br>проспект Кабанбай батыра, 19/1', mapText:'Открыть карту',
+        venueLabel:'Место проведения', venueText:'г. Астана<br>проспект Кабанбай батыра, 19/1', mapText:'Открыть карту', dressCodeLabel:'Дресс-код', dressCodeTitle:'Казахский национальный стиль', dressCodeText:'Будем рады видеть вас в национальных образах или с элементами казахского орнамента',
         calendarTitle:'Особенный день', calendarMonth:'Октябрь 2026', dow:['пн','вт','ср','чт','пт','сб','вс'],
         countTitle:'До торжества', labs:['дней','часов','минут','секунд'],
         rsvpTitle:'Подтвердите участие', rsvpIntro:'Пожалуйста, оставьте ответ заранее — это поможет нам всё подготовить.',
@@ -1429,7 +1440,7 @@
       const t = translations[lang];
       document.documentElement.lang = lang;
       document.title = t.title;
-      ['photoBadge','inviteTicket','doubleJoy','heroKicker','tusauTitle','andText','retirementTitle','quoteText','scrollText','guestsTitle','detailsTitle','dateLabel','dateText','weekdayText','venueLabel','mapText','calendarTitle','calendarMonth','countTitle','rsvpTitle','rsvpIntro','nameLabel','attendanceLabel','attendanceYesText','attendanceFamilyText','attendanceNoText','guestCountLabel','submitText','footerTitle','footerNote'].forEach(id=>{
+      ['photoBadge','inviteTicket','doubleJoy','heroKicker','tusauTitle','andText','retirementTitle','quoteText','scrollText','guestsTitle','detailsTitle','dateLabel','dateText','weekdayText','venueLabel','mapText','dressCodeLabel','dressCodeTitle','dressCodeText','calendarTitle','calendarMonth','countTitle','rsvpTitle','rsvpIntro','nameLabel','attendanceLabel','attendanceYesText','attendanceFamilyText','attendanceNoText','guestCountLabel','submitText','footerTitle','footerNote'].forEach(id=>{
         const map = {attendanceYesText:'attendanceYes',attendanceFamilyText:'attendanceFamily',attendanceNoText:'attendanceNo'};
         setText(id, t[map[id] || id]);
       });
