@@ -774,7 +774,7 @@
       border:0;
       border-radius:0;
       transform:none;
-      background:url("./13_ornament_band.png") center/contain no-repeat;
+      background:url("./6_photo.png") center/contain no-repeat;
       opacity:.045;
       filter:none;
     }
@@ -971,7 +971,7 @@
       inset:auto -20px -38px auto;
       width:140px;
       height:70px;
-      background:url("./13_ornament_band.png") center/contain no-repeat;
+      background:url("./6_photo.png") center/contain no-repeat;
       opacity:.06;
       pointer-events:none;
     }
@@ -1227,7 +1227,7 @@
       filter:hue-rotate(-8deg) saturate(.95);
     }
     .card::after{
-      background:url("./13_ornament_band.png") center/contain no-repeat;
+      background:url("./6_photo.png") center/contain no-repeat;
       border:0;
       width:225px;
       height:72px;
@@ -1590,6 +1590,312 @@
       filter: saturate(.98) brightness(1.01) !important;
     }
 
+    /* ===== Richer gold ornament redesign ===== */
+    :root{
+      --paper:#f5eddc !important;
+      --ivory:#fcf8ef !important;
+      --ink:#573d31 !important;
+      --muted:#84685a !important;
+      --jade:#c98d54 !important;
+      --jade-dark:#98572f !important;
+      --jade-light:#f3e1c7 !important;
+      --terracotta:#b76534 !important;
+      --line:rgba(180,124,76,.20) !important;
+      --card:rgba(255,251,244,.94) !important;
+      --shadow:0 24px 55px rgba(124,88,57,.14) !important;
+    }
+
+    body{
+      background:
+        radial-gradient(900px 540px at 10% 8%, rgba(232,199,128,.18), transparent 56%),
+        radial-gradient(700px 480px at 90% 14%, rgba(210,160,112,.10), transparent 58%),
+        linear-gradient(180deg, #f7efdf 0%, #f5eddc 42%, #efe4cf 100%) !important;
+    }
+
+    .page{
+      position:relative;
+      isolation:isolate;
+    }
+
+    .gold-ornament-v,
+    .gold-ornament-h{
+      position:absolute;
+      pointer-events:none;
+      user-select:none;
+      z-index:0;
+      opacity:.88;
+      filter: drop-shadow(0 10px 18px rgba(146,104,64,.12));
+    }
+    .gold-ornament-v{
+      width:92px;
+      animation:goldFloat 8s ease-in-out infinite;
+    }
+    .gov-left{left:-54px}
+    .gov-right{right:-54px}
+    .gov-left-top{top:140px}
+    .gov-left-bottom{top:1420px}
+    .gov-right-top{top:470px; animation-delay:-1.4s}
+    .gov-right-bottom{top:1760px; animation-delay:-2.8s}
+    .gold-ornament-h{
+      width:min(560px, 78vw);
+      left:50%;
+      transform:translateX(-50%);
+      animation:glowSoft 6.5s ease-in-out infinite;
+    }
+    .goh-top{top:34px}
+    .goh-bottom{bottom:18px}
+    @keyframes goldFloat{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-12px)}
+    }
+    @keyframes glowSoft{
+      0%,100%{opacity:.80}
+      50%{opacity:1}
+    }
+
+    .card{
+      background:
+        linear-gradient(180deg, rgba(255,252,247,.97), rgba(252,246,237,.94)) !important;
+      border:1px solid rgba(190,143,99,.18) !important;
+      box-shadow:0 20px 48px rgba(118,83,53,.12) !important;
+      overflow:hidden !important;
+    }
+    .card::before,
+    .card::after{
+      display:block !important;
+      content:"" !important;
+      position:absolute;
+      left:50%;
+      width:min(280px, 56%);
+      height:44px;
+      transform:translateX(-50%);
+      background:url('./6_photo.png') center/contain no-repeat;
+      opacity:.16;
+      z-index:0;
+      pointer-events:none;
+    }
+    .card::before{top:10px}
+    .card::after{bottom:10px; transform:translateX(-50%) scaleY(-1)}
+    .inner{
+      position:relative;
+      z-index:1;
+    }
+    .inner::before,
+    .inner::after{
+      content:"";
+      position:absolute;
+      top:26px;
+      width:56px;
+      height:280px;
+      background:url('./5_photo.png') center/contain no-repeat;
+      opacity:.11;
+      pointer-events:none;
+      z-index:0;
+    }
+    .inner::before{left:-8px}
+    .inner::after{right:-8px; transform:scaleX(-1)}
+    .inner > *{
+      position:relative;
+      z-index:1;
+    }
+
+    .hero{
+      background:
+        radial-gradient(circle at 50% 12%, rgba(240,214,165,.40), transparent 28%),
+        linear-gradient(180deg, rgba(255,249,239,.99), rgba(252,245,233,.96)) !important;
+    }
+    .hero .inner{padding-top:38px !important}
+    .hero-scene{
+      inset:0;
+      z-index:0;
+    }
+    .hero-gold-ornament,
+    .hero-gold-vertical{
+      position:absolute;
+      pointer-events:none;
+      user-select:none;
+      filter:none !important;
+      opacity:.72;
+    }
+    .hero-gold-top{
+      top:14px;
+      left:50%;
+      width:min(380px, 66%);
+      transform:translateX(-50%);
+    }
+    .hero-gold-bottom{
+      bottom:134px;
+      left:50%;
+      width:min(360px, 62%);
+      transform:translateX(-50%) scaleY(-1);
+      opacity:.50;
+    }
+    .hero-gold-left{
+      left:6px;
+      top:130px;
+      width:66px;
+      opacity:.38;
+    }
+    .hero-gold-right{
+      right:6px;
+      top:130px;
+      width:66px;
+      transform:scaleX(-1);
+      opacity:.38;
+    }
+
+    .scene-wind.wind-top{top:18px; right:-18px; width:225px; opacity:.28}
+    .scene-cloud.cloud-left{top:88px; left:-10px; width:98px; opacity:.22}
+    .scene-cloud.cloud-right{top:172px; right:18px; width:96px; opacity:.20}
+    .scene-sun{top:98px; right:80px; width:82px}
+    .scene-eagle-top{top:146px; right:126px; width:98px; opacity:.66}
+
+    .hero-photo-wrap{
+      width:342px !important;
+      height:342px !important;
+      margin-top:8px !important;
+      margin-bottom:22px !important;
+      filter:drop-shadow(0 22px 36px rgba(132,92,58,.14)) !important;
+    }
+    .hero-photo-wrap::before{
+      content:"";
+      position:absolute;
+      inset:24px;
+      border-radius:50%;
+      background:radial-gradient(circle at 50% 40%, rgba(255,255,255,.92), rgba(247,232,207,.92));
+      box-shadow:inset 0 0 0 1px rgba(208,177,132,.26);
+      z-index:0;
+    }
+    .hero-photo-wrap::after{
+      content:"";
+      position:absolute;
+      inset:2px;
+      border-radius:50%;
+      border:1px dashed rgba(210,178,132,.28);
+      z-index:0;
+    }
+    .hero-photo{
+      width:198px !important;
+      height:198px !important;
+      border:7px solid rgba(255,252,246,.98) !important;
+      box-shadow:0 14px 28px rgba(125,87,56,.16) !important;
+      z-index:1;
+      object-position:center top;
+    }
+    .hero-photo-frame{
+      inset:8px !important;
+      width:calc(100% - 16px) !important;
+      height:calc(100% - 16px) !important;
+      object-fit:contain !important;
+      filter:drop-shadow(0 10px 18px rgba(149,84,64,.14)) !important;
+      animation:shanyrakFloat 7s ease-in-out infinite !important;
+      z-index:2 !important;
+    }
+    @keyframes shanyrakFloat{
+      0%,100%{transform:translateY(0) rotate(0deg)}
+      50%{transform:translateY(-5px) rotate(1.5deg)}
+    }
+    .photo-badge{
+      right:26px !important;
+      bottom:52px !important;
+      background:linear-gradient(135deg,#d38c4a,#e7bc72) !important;
+      color:#fffaf3 !important;
+      border:3px solid rgba(255,250,242,.92) !important;
+      box-shadow:0 12px 24px rgba(173,115,61,.24) !important;
+    }
+
+    .child-name{
+      background:linear-gradient(135deg,#8d512d,#d58c49 84%) !important;
+      -webkit-background-clip:text !important;
+      background-clip:text !important;
+      color:transparent !important;
+      text-shadow:none !important;
+    }
+    .topline,.koss,.tusau,.hero-title,.script-title,.section-title{
+      color:#6b4938 !important;
+    }
+    .quote{
+      background:rgba(255,247,232,.92) !important;
+      border-color:rgba(198,143,88,.20) !important;
+    }
+
+    .ornament img,
+    .language-ornament{
+      width:min(100%, 440px) !important;
+      filter:none !important;
+      opacity:.96 !important;
+    }
+
+    .lang-switch,.music-fab{
+      background:rgba(255,250,242,.95) !important;
+      border-color:rgba(198,147,94,.18) !important;
+    }
+    .lang-switch button.active{
+      background:#bf7540 !important;
+      color:#fff !important;
+    }
+    .music-fab button,
+    .primary-btn,
+    .mapbtn{
+      background:linear-gradient(135deg,#986038,#d39b5a) !important;
+    }
+    .number{
+      background:linear-gradient(135deg,#b56c36,#deab67) !important;
+    }
+    .radio:has(input:checked){
+      background:rgba(251,238,217,.84) !important;
+      border-color:rgba(197,143,89,.28) !important;
+    }
+
+    .page-decor{
+      filter: saturate(.95) brightness(.98) drop-shadow(0 8px 14px rgba(113,81,57,.08)) !important;
+      opacity:.46;
+    }
+    .decor-dombra{left:-80px; top:980px; width:132px}
+    .decor-kobyz{right:-54px; top:1030px; width:78px}
+    .decor-eagle{right:-28px; top:280px; width:140px; opacity:.28}
+    .decor-horse{left:-28px; top:1650px; width:128px; opacity:.26}
+
+    .footer-decor img{
+      filter:none !important;
+      opacity:.86 !important;
+    }
+
+    @media(max-width:780px){
+      .gold-ornament-v{width:74px}
+      .gov-left{left:-46px}
+      .gov-right{right:-46px}
+      .gov-left-top{top:160px}
+      .gov-left-bottom{top:1560px}
+      .gov-right-top{top:530px}
+      .gov-right-bottom{top:1880px}
+      .gold-ornament-h{width:min(420px, 82vw)}
+      .hero-photo-wrap{width:292px !important;height:292px !important}
+      .hero-photo{width:170px !important;height:170px !important}
+      .hero-gold-left,.hero-gold-right{width:52px}
+      .hero-gold-bottom{bottom:118px}
+      .inner::before,.inner::after{width:48px;height:220px;opacity:.08}
+    }
+
+    @media(max-width:460px){
+      .gold-ornament-v{width:62px}
+      .gov-left{left:-44px}
+      .gov-right{right:-44px}
+      .gov-left-top{top:112px}
+      .gov-left-bottom{top:1460px}
+      .gov-right-top{top:450px}
+      .gov-right-bottom{top:1790px}
+      .gold-ornament-h{width:min(320px, 84vw)}
+      .hero-photo-wrap{width:264px !important;height:264px !important}
+      .hero-photo{width:154px !important;height:154px !important}
+      .photo-badge{right:18px !important; bottom:38px !important}
+      .hero-gold-top{width:240px}
+      .hero-gold-bottom{width:230px; bottom:108px}
+      .hero-gold-left,.hero-gold-right{display:none}
+      .card::before,.card::after{width:180px}
+      .inner::before,.inner::after{display:none}
+    }
+
   </style>
 </head>
 <body>
@@ -1598,7 +1904,7 @@
 
   <div class="language-gate" id="languageGate" aria-modal="true" role="dialog">
     <div class="language-card">
-      <img class="language-ornament" src="./13_ornament_band.png" alt="">
+      <img class="language-ornament" src="./6_photo.png" alt="">
       <div class="language-welcome">ҚОШ КЕЛДІҢІЗ • ДОБРО ПОЖАЛОВАТЬ</div>
       <h2 class="language-title">Тілді таңдаңыз</h2>
       <p class="language-sub">Выберите язык, на котором открыть приглашение</p>
@@ -1624,6 +1930,13 @@
   <iframe name="rsvpSink" id="rsvpSink" title="RSVP" style="display:none"></iframe>
 
   <main class="page">
+    <img class="gold-ornament-v gov-left gov-left-top" src="./5_photo.png" alt="">
+    <img class="gold-ornament-v gov-left gov-left-bottom" src="./5_photo.png" alt="">
+    <img class="gold-ornament-v gov-right gov-right-top" src="./5_photo.png" alt="">
+    <img class="gold-ornament-v gov-right gov-right-bottom" src="./5_photo.png" alt="">
+    <img class="gold-ornament-h goh-top" src="./6_photo.png" alt="">
+    <img class="gold-ornament-h goh-bottom" src="./6_photo.png" alt="">
+
     <img class="page-decor decor-dombra" src="./10_dombra.png" alt="">
     <img class="page-decor decor-kobyz" src="./11_kobyz.png" alt="">
     <img class="page-decor decor-eagle" src="./02_eagle.png" alt="">
@@ -1637,6 +1950,10 @@
           <img class="scene-cloud cloud-right" src="./04_blue_cloud.png" alt="">
           <img class="scene-sun" src="./03_sun.png" alt="">
           <img class="scene-eagle-top" src="./02_eagle.png" alt="">
+          <img class="hero-gold-ornament hero-gold-top" src="./6_photo.png" alt="">
+          <img class="hero-gold-ornament hero-gold-bottom" src="./6_photo.png" alt="">
+          <img class="hero-gold-vertical hero-gold-left" src="./5_photo.png" alt="">
+          <img class="hero-gold-vertical hero-gold-right" src="./5_photo.png" alt="">
         </div>
         <div class="hero-photo-wrap">
           <img class="hero-photo" src="./main_photo.jpeg" alt="Дінмұхамед">
@@ -1646,7 +1963,7 @@
 
         <div class="topline" id="inviteTicket">Шақыру билеті</div>
         <h1 class="koss" id="doubleJoy">Қос қуаныш</h1>
-        <div class="ornament"><img src="./13_ornament_band.png" alt="Қазақы ою"></div>
+        <div class="ornament"><img src="./6_photo.png" alt="Қазақы ою"></div>
 
         <div class="child-name" id="childName">Дінмұхамед</div>
         <div class="topline" id="heroKicker" style="margin:8px 0 0;color:var(--jade-dark);font-size:11px;letter-spacing:.22em">БІРІНШІ ҚАДАМ • ҚОС ҚУАНЫШ</div>
@@ -1678,7 +1995,7 @@
     <section class="card" id="invite">
       <div class="inner">
         <div class="script-title" id="guestsTitle">Құрметті қонақтар!</div>
-        <div class="ornament"><img src="./13_ornament_band.png" alt="Қазақы ою"></div>
+        <div class="ornament"><img src="./6_photo.png" alt="Қазақы ою"></div>
         <p class="text" id="inviteBody">
           Кішкентай <span class="em">Дінмұхамедтің тұсаукесерін</span>
           және аяулы анамыздың маңдай термен атқарған еңбегінің мерейлі белесі —
@@ -1697,7 +2014,7 @@
     <section class="card">
       <div class="inner">
         <h2 class="section-title" id="detailsTitle">Тойдың жай-жапсары</h2>
-        <div class="ornament"><img src="./13_ornament_band.png" alt="Қазақы ою"></div>
+        <div class="ornament"><img src="./6_photo.png" alt="Қазақы ою"></div>
 
         <div class="details">
           <div class="detail">
@@ -1745,7 +2062,7 @@
     <section class="card" id="rsvp">
       <div class="inner">
         <div class="script-title" id="rsvpTitle">Қатысуыңызды растаңыз</div>
-        <div class="ornament"><img src="./13_ornament_band.png" alt="Қазақы ою"></div>
+        <div class="ornament"><img src="./6_photo.png" alt="Қазақы ою"></div>
         <p class="text" id="rsvpIntro" style="margin-top:0">Жауабыңызды алдын ала қалдырсаңыз, бізге өте ыңғайлы болады.</p>
 
         <form class="form" id="rsvpForm" method="POST" target="rsvpSink" action="https://script.google.com/macros/s/AKfycbz_K-k_H-rBPox3eEkpVCpv6sC8gB1_nCdm4QFKgapD_JEp-2l0aS0plFK5YWxBKBg/exec">
@@ -1801,7 +2118,7 @@
     <section class="card">
       <div class="inner">
         <div class="script-title" id="footerTitle">Ақ тілекпен күтеміз!</div>
-        <div class="ornament"><img src="./13_ornament_band.png" alt="Қазақы ою"></div>
+        <div class="ornament"><img src="./6_photo.png" alt="Қазақы ою"></div>
         <p class="text" id="footerBody" style="margin-top:0">
           Қуанышымызға ортақтасып, ақ дастарқанымыздың сәнін келтіріңіздер.
           Сіздердің жылы лебіздеріңіз бен ақ баталарыңыз — біз үшін ең қымбат сый.
